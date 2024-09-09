@@ -2,7 +2,7 @@ using Microsoft.Unity.VisualStudio.Editor;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using TMPro;
+
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.UI;
@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class BattleController : MonoBehaviour, IGameplayController
+public class BattleController : MonoBehaviour
 {
     PlayerInput _playerInput;
     InputAction _Restart;

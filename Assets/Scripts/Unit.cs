@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour
             Team = "Red";
         }
     }
-    void Update()
+    public void BecomeLady()
     {
         if (Team == "Red" && Cell.GetComponent<Cell>().becomeLadyRed == true)
         {

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using TMPro;
+
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEditor.PlayerSettings;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BattleField
 {
@@ -21,7 +22,7 @@ public class BattleField
         FoundUnitsCells();
         foreach (GameObject _cell in Cells)
         {
-            if (_cell.GetComponent<Cell>().Team == canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text)
+            if (_cell.GetComponent<Cell>().Team == canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text)
             {
                 _cell.GetComponent<Cell>()._choice = "select";
             }
@@ -88,11 +89,11 @@ public class BattleField
         FoundUnitsCells();
         Material material;
         var NeighbourType = new Neightbour().NeighbourType;
-
+        GameObject unit;
         if (cell.GetComponent<Cell>().Unit != null && cell.GetComponent<Cell>().Unit.GetComponent<Unit>().Lady != true)
         {
             CellSelect.Add(cell);
-            var unit = cell.GetComponent<Cell>().Unit;
+            unit = cell.GetComponent<Cell>().Unit;
             unit.GetComponent<Unit>().IsSelected = true;
             foreach (GameObject _cell in Cells)
             {
@@ -192,7 +193,7 @@ public class BattleField
         }
         if (cell.GetComponent<Cell>().Unit != null && cell.GetComponent<Cell>().Unit.GetComponent<Unit>().Lady == true)
         {
-            var unit = cell.GetComponent<Cell>().Unit;
+            unit = cell.GetComponent<Cell>().Unit;
             unit.GetComponent<Unit>().IsSelected = true;
             CellSelect.Add(cell);
             foreach (GameObject _cell in Cells)
@@ -324,13 +325,13 @@ public class BattleField
 
                 if (cell.GetComponent<Cell>().Unit == null)
                 {
-                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Red")
+                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Blue";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
                     }
-                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Blue")
+                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Red";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
                     }
                     var pos = new Vector3(cell.transform.position.x, _unit.transform.position.y, cell.transform.position.z);
                     
@@ -352,13 +353,13 @@ public class BattleField
                 if (cell.GetComponent<Cell>().Unit == null)
                 {
                     Debug.Log("f");
-                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Red")
+                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Blue";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
                     }
-                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Blue")
+                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Red";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
                     }
                     var posit = _unit.transform.position - (cell.transform.position + new Vector3(0, 0.678f, 0));
 
@@ -426,13 +427,13 @@ public class BattleField
                 if (cell.GetComponent<Cell>().Unit != null)
                 {
 
-                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Red")
+                    if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Blue";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
                     }
-                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text == "Blue")
+                    else if (canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
                     {
-                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<TextMeshProUGUI>().text = "Red";
+                        canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
                     }
                     var posit = _unit.transform.position - (cell.transform.position + new Vector3(0, 0.678f, 0));
                     var pos = _unit.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);

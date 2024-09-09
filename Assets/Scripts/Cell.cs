@@ -19,10 +19,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     [SerializeField]
     public bool CanMove;
 
-    void Update()
-    {
-
-    }
+   
     public void OnPointerEnter(PointerEventData eventData)
     {
         gameObject.transform.Find("focus").GetComponent<MeshRenderer>().enabled = true;
