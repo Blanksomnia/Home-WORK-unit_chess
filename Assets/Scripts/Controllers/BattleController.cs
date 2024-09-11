@@ -19,9 +19,10 @@ public class BattleController : MonoBehaviour
     InputAction _confirm;
     InputAction _cancel;
     public GameObject _canvas;
-
-    public List<GameObject> Cells = new BattleField().Cells;
-    public List<GameObject> Units = new BattleField().Units;
+    
+    public bool conf;
+    public Unit UNIT;
+    public Cell CELL;
 
     void Update()
     {
@@ -42,56 +43,30 @@ public class BattleController : MonoBehaviour
             _canvas.transform.GetChild(1).gameObject.transform.GetComponent<UnityEngine.UI.Image>().fillAmount = 0f;
         }
         if (_cancel.WasPressedThisFrame())
+        {      
+            foreach (Cell _cell in _canvas.GetComponent<BattleField>().Cells)
+            {
+                _cell.ResetSelect();
+                _cell._choice = "Lock";
+            }
+            _canvas.GetComponent<BattleField>().TeamQueue();
+        }
+
+        if (_confirm.WasPressedThisFrame() && conf == true && CELL != null && UNIT != null)
         {
-            GameObject[] ObjectsFound = SceneManager.GetActiveScene().GetRootGameObjects();
-
-            foreach (GameObject _unit in ObjectsFound)
-            {
-               
-                if (_unit.transform.GetComponent<Unit>())
-                {
-                    Units.Add(_unit);
-                }
-
-
-            }
-            foreach (GameObject _cell in ObjectsFound)
-            {
-
-                if (_cell.transform.GetComponent<Cell>())
-                {
-                    foreach (GameObject _unit in Units)
-                    {
-                        if (_cell.transform.position == _unit.transform.position - new Vector3(0, 0.678f, 0))
-                        {
-                            _cell.GetComponent<Cell>().Unit = _unit;
-                            _unit.GetComponent<Unit>().Cell = _cell;
-
-                        }
-
-                    }
-                    Cells.Add(_cell);
-                }
-            }
-            foreach (GameObject _cell in Cells)
-            {
-                _cell.GetComponent<Cell>()._choice = "Lock";
-                foreach (GameObject _unit in Units)
-                {
-                    if (_unit.GetComponent<Unit>().Cell != null)
-                    {
-                        _unit.GetComponent<Unit>().IsSelected = false;
-                    }
-                    
-                }
-                
-                _cell.GetComponent<Cell>().ResetSelect();
-                
-            }
-            new BattleField().TeamQueue();
+            _canvas.GetComponent<BattleField>().IsMoved(CELL, UNIT);
+            CELL = null;
+            UNIT = null;
+        }
+        if(_confirm.WasPressedThisFrame() && conf == false && CELL != null && UNIT != null)
+        {
+            _canvas.GetComponent<BattleField>().IsAttack(CELL, UNIT);
+            CELL = null;
+            UNIT = null;
         }
 
     }
+  
     void Start()
     {
         GameObject[] ObjectsFound = SceneManager.GetActiveScene().GetRootGameObjects();
@@ -105,13 +80,12 @@ public class BattleController : MonoBehaviour
             }
 
         }
-        new BattleField().TeamQueue();
+        
         _playerInput = gameObject.transform.GetComponent<PlayerInput>();
-
         _Restart = _playerInput.actions["Tab"];
         _cancel = _playerInput.actions["Cancel"];
-
-
+        _confirm = _playerInput.actions["Confirm"];
+       
 
     }
 

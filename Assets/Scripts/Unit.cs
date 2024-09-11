@@ -12,22 +12,11 @@ public class Unit : MonoBehaviour
     [SerializeField]
     Material Red;
     public string Team;
-    public bool IsSelected = false;
     public bool Lady = false;
-    public GameObject Cell;
+    public Cell Cell;
+  
     // Start is called before the first frame update
-    void Awake()
-    {
-        if(gameObject.GetComponent<Renderer>().material == Blue)
-        {
-            Team = "Blue";
 
-        }
-        else if(gameObject.GetComponent<Renderer>().material == Red)
-        {
-            Team = "Red";
-        }
-    }
     public void BecomeLady()
     {
         if (Team == "Red" && Cell.GetComponent<Cell>().becomeLadyRed == true)

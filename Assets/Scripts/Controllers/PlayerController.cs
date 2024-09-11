@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class PlayerController
+public class PlayerController : MonoBehaviour
 {
-    public void choice(GameObject gameObject, string _choice)
+    public void choice(Cell _cell, string _choice , Unit unit, Unit selun)
     {
+        
         switch (_choice)
         {
             case "Lock":
@@ -13,17 +14,17 @@ public class PlayerController
                 break;
             case "select":
                 {
-                    new BattleField().OnPointerClickEvent(gameObject);
+                    gameObject.GetComponent<BattleField>().OnPointerClickEvent(_cell, unit);
                 }
                 break;
             case "ismove":
                 {
-                    new BattleField().IsMoved(gameObject);
+                    gameObject.GetComponent<BattleField>().f(_cell, selun, "ismove");
                 }
                 break;
             case "isattack":
                 {
-                    new BattleField().IsAttack(gameObject);
+                    gameObject.GetComponent<BattleField>().f(_cell, selun, "isattack");
                 }
                 break;
             default:
