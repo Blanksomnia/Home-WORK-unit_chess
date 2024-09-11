@@ -278,7 +278,7 @@ public class BattleField : MonoBehaviour
                         foreach (Cell _cell in Cells)
                         {
                             if (_cell.transform.position == pos && _cell.Unit != null) { CanKill = false; }
-                            for (int c = 1; c < 8; c++)
+                            for (int c = 0; c < 8; c++)
                             {
                                 if (posit.x >= 1 && posit.z >= 1)
                                 {
