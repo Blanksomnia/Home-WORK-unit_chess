@@ -19,7 +19,7 @@ public class BattleController : MonoBehaviour
     InputAction _confirm;
     InputAction _cancel;
     public GameObject _canvas;
-    
+    public bool canCancel = true;
     public bool conf;
     public Unit UNIT;
     public Cell CELL;
@@ -42,7 +42,7 @@ public class BattleController : MonoBehaviour
             _canvas.transform.GetChild(1).gameObject.SetActive(false);
             _canvas.transform.GetChild(1).gameObject.transform.GetComponent<UnityEngine.UI.Image>().fillAmount = 0f;
         }
-        if (_cancel.WasPressedThisFrame())
+        if (_cancel.WasPressedThisFrame() && canCancel == true)
         {      
             foreach (Cell _cell in _canvas.GetComponent<BattleField>().Cells)
             {
