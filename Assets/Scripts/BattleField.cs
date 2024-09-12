@@ -248,30 +248,66 @@ public class BattleField : MonoBehaviour
                     {
 
                         var posit = cell.transform.position - CellSelect[i].transform.position;
-                        foreach (Cell _cell in CellSelect)
+                        foreach (Cell _cell in MovedAfterAttack)
                         {
-                            for (int c = 1; c < 8; c++)
+                            for (int c = 0; c < 8; c++)
                             {
-
-                                    if (_cell.transform.position == cell.transform.position + new Vector3(-posit.x * 2 + -c, 0, -posit.z * 2 + -c) && cell.transform.position != CellSelect[i].transform.position && _cell.transform != CellSelect[i].transform)
+                                if (posit.x >= 1 && posit.z >= 1)
+                                {
+                                    if (_cell.transform.position == MovedAfterAttack[i].transform.position + new Vector3(-c, 0, -c))
                                     {
-                                        Debug.Log(Convert.ToString(CellSelect[i].name + "own"));
                                         Debug.Log(Convert.ToString(_cell.name));
                                         _cell._choice = "Lock";
-                                        _cell.Unitselected = null;
                                         _cell.ResetSelect();
+                                        _cell.Unitselected = null;
                                     }
-
+                                }
+                                if (posit.x <= -1 && posit.z <= -1)
+                                {
+                                    if (_cell.transform.position == MovedAfterAttack[i].transform.position + new Vector3(c, 0, c))
+                                    {
+                                        Debug.Log(Convert.ToString(_cell.name));
+                                        _cell._choice = "Lock";
+                                        _cell.ResetSelect();
+                                        _cell.Unitselected = null;
+                                    }
+                                }
+                                if (posit.x >= 1 && posit.z <= -1)
+                                {
+                                    if (_cell.transform.position == MovedAfterAttack[i].transform.position + new Vector3(-c, 0, c))
+                                    {
+                                        Debug.Log(Convert.ToString(_cell.name));
+                                        _cell._choice = "Lock";
+                                        _cell.ResetSelect();
+                                        _cell.Unitselected = null;
+                                    }
+                                }
+                                if (posit.x <= -1 && posit.z >= 1)
+                                {
+                                    if (_cell.transform.position == MovedAfterAttack[i].transform.position + new Vector3(c, 0, -c))
+                                    {
+                                        Debug.Log(Convert.ToString(_cell.name));
+                                        _cell._choice = "Lock";
+                                        _cell.ResetSelect();
+                                        _cell.Unitselected = null;
+                                    }
+                                }
                             }
-                        }
 
+
+                        }
                     }
+
+                    
 
                 }
             }
         }
         
     }
+
+
+
     public  void attacked(Cell cell, Unit UNIT)
     {
         foreach(Cell _cell in Cells)
@@ -385,20 +421,50 @@ for (int i = 0; i < CellSelect.Count; i++)
         var posit = cell.transform.position - CellSelect[i].transform.position;
         foreach (Cell _cell in CellSelect)
         {
-            for (int c = 1; c < 8; c++)
-            {
-
-                if (_cell.transform.position == cell.transform.position + new Vector3(-posit.x * 2 + -c, 0, -posit.z * 2 + -c) && cell.transform.position != CellSelect[i].transform.position && _cell.transform != CellSelect[i].transform)
-                {
-                    Debug.Log(Convert.ToString(CellSelect[i].name + "own"));
-                    Debug.Log(Convert.ToString(_cell.name));
-                    _cell._choice = "Lock";
-                    _cell.Unitselected = null;
-                    _cell.ResetSelect();
+                    for (int c = 0; c < 8; c++)
+                    {
+                        if (posit.x >= 1 && posit.z >= 1)
+                        {
+                            if (_cell.transform.position == CellSelect[i].transform.position + new Vector3(-c, 0, -c))
+                            {
+                                Debug.Log(Convert.ToString(_cell.name));
+                                _cell._choice = "Lock";
+                                _cell.ResetSelect();
+                                _cell.Unitselected = null;
+                            }
+                        }
+                        if (posit.x <= -1 && posit.z <= -1)
+                        {
+                            if (_cell.transform.position == CellSelect[i].transform.position + new Vector3(c, 0, c))
+                            {
+                                Debug.Log(Convert.ToString(_cell.name));
+                                _cell._choice = "Lock";
+                                _cell.ResetSelect();
+                                _cell.Unitselected = null;
+                            }
+                        }
+                        if (posit.x >= 1 && posit.z <= -1)
+                        {
+                            if (_cell.transform.position == CellSelect[i].transform.position + new Vector3(-c, 0, c))
+                            {
+                                Debug.Log(Convert.ToString(_cell.name));
+                                _cell._choice = "Lock";
+                                _cell.ResetSelect();
+                                _cell.Unitselected = null;
+                            }
+                        }
+                        if (posit.x <= -1 && posit.z >= 1)
+                        {
+                            if (_cell.transform.position == CellSelect[i].transform.position + new Vector3(c, 0, -c))
+                            {
+                                Debug.Log(Convert.ToString(_cell.name));
+                                _cell._choice = "Lock";
+                                _cell.ResetSelect();
+                                _cell.Unitselected = null;
+                            }
+                        }
+                    }
                 }
-
-            }
-        }
 
     }
 }
