@@ -493,6 +493,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -966,6 +967,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -1013,6 +1015,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -1740,6 +1743,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -1999,6 +2003,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2116,6 +2121,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2163,6 +2169,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2276,6 +2283,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2402,6 +2410,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2588,6 +2597,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -2770,6 +2780,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -3048,7 +3059,7 @@ GameObject:
   - component: {fileID: 545998390}
   - component: {fileID: 545998389}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Return1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3640,6 +3651,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -3687,6 +3699,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -3739,6 +3752,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType:
   - {x: 1, y: 0, z: 0}
   - {x: 1, y: 0, z: 1}
@@ -3772,6 +3786,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -3983,6 +3998,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -4715,11 +4731,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b91da6df6c282e4c82f206057a74342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 0}
   canCancel: 1
   conf: 0
   UNIT: {fileID: 0}
   CELL: {fileID: 0}
+  _battleField: {fileID: 807386024}
 --- !u!114 &807386023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4732,6 +4748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c679ae23f86f6ce4eaea577493a45600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BattleField: {fileID: 807386024}
 --- !u!114 &807386024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4747,16 +4764,11 @@ MonoBehaviour:
   Cells: []
   Units: []
   Border: []
-  _canvas: {fileID: 0}
-  NeighbourType:
-  - {x: 1, y: 0, z: 0}
-  - {x: 1, y: 0, z: 1}
-  - {x: 1, y: 0, z: -1}
-  - {x: -1, y: 0, z: 1}
-  - {x: -1, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: -1}
-  - {x: -1, y: 0, z: -1}
+  BattleController: {fileID: 807386022}
+  UITeamText: {fileID: 2032998774}
+  SelectGreen: {fileID: 2100000, guid: 9055db322af8c1245a7e223300ac93b3, type: 2}
+  FocusGreen: {fileID: 2100000, guid: c64237a288e31b640ae1d1595a05d274, type: 2}
+  SelectRed: {fileID: 2100000, guid: 178dd0f3a0886ed449dca389fdcdcf24, type: 2}
 --- !u!1001 &807896360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4876,6 +4888,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -5351,6 +5364,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -5695,6 +5709,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -6248,6 +6263,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -6305,6 +6321,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -6482,6 +6499,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -7406,6 +7424,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -7428,7 +7447,7 @@ GameObject:
   - component: {fileID: 1291718453}
   - component: {fileID: 1291718452}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Team
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8355,6 +8374,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -8879,6 +8899,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -8971,7 +8992,7 @@ GameObject:
   - component: {fileID: 1509933553}
   - component: {fileID: 1509933552}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Return2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9196,6 +9217,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9243,6 +9265,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9295,6 +9318,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9330,6 +9354,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9399,6 +9424,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9446,6 +9472,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -9981,6 +10008,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -11146,6 +11174,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -11507,6 +11536,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -11524,7 +11554,7 @@ GameObject:
   - component: {fileID: 2032998773}
   - component: {fileID: 2032998774}
   m_Layer: 5
-  m_Name: 'Text (TMP) '
+  m_Name: 'Text (TMP)1 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12096,6 +12126,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -12204,6 +12235,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType:
   - {x: 1, y: 0, z: 0}
   - {x: 1, y: 0, z: 1}
@@ -12237,6 +12269,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []
@@ -12436,6 +12469,7 @@ MonoBehaviour:
   CanMove: 0
   _material: {fileID: 0}
   _canvas: {fileID: 0}
+  _battlefield: {fileID: 0}
   NeighbourType: []
   CellSelect: []
   CellSelectLady: []

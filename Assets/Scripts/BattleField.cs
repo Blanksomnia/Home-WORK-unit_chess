@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Xml.Linq;
-
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -19,8 +18,21 @@ public class BattleField : MonoBehaviour
     public List<Cell> Cells = new List<Cell>();
     public List<Unit> Units = new List<Unit>();
     public List<Cell> Border = new List<Cell>();
-    public GameObject _canvas;
-    public List<Vector3> NeighbourType = new Neightbour().NeighbourType;
+    List<Vector3> NeighbourType = new Neightbour().NeighbourType;
+
+    [SerializeField]
+    BattleController BattleController;
+
+    [SerializeField]
+    UnityEngine.UI.Text UITeamText;
+
+    [SerializeField]
+    Material SelectGreen;
+    [SerializeField]
+    Material FocusGreen;
+    [SerializeField]
+    Material SelectRed;
+
     public void TeamQueue()
     {
         foreach (Cell _cell in Cells)
@@ -28,10 +40,11 @@ public class BattleField : MonoBehaviour
             _cell._choice = "Lock";
             _cell.ResetSelect();
         }
+
         foreach (Unit _unit in Units)
         {
             _unit.BecomeLady();
-            if (_unit.Team == _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text)
+            if (_unit.Team == UITeamText.text)
             {
                 _unit.Cell._choice = "select";
             }
@@ -43,7 +56,7 @@ public class BattleField : MonoBehaviour
     private void Awake()
     {
         GameObject[] ObjectsFound = SceneManager.GetActiveScene().GetRootGameObjects();
-        _canvas = gameObject;
+
         foreach (GameObject _unit in ObjectsFound)
         {
             if (_unit.transform.name == "Units")
@@ -107,7 +120,9 @@ public class BattleField : MonoBehaviour
     {
         List<Cell> CellSelect = cell.CellSelect;
         List<Cell> MovedAfterAttack = cell.MovedAfterAttack;
+
         bool canMove = true;
+
         foreach (Cell _cell in Cells)
         {
             if(_cell != cell)
@@ -115,52 +130,55 @@ public class BattleField : MonoBehaviour
                 _cell._choice = "Lock";
             }
         }
-        cell._material = Resources.Load("Material/focus_material", typeof(Material)) as Material;
+
+        cell._material = FocusGreen;
         cell.SetSelect();
+
         if (UNIT.Lady != true)
         {
-       
+
+            for (int i = 0; i < CellSelect.Count; i++)
+            {
+                if (CellSelect[i].Unit != null)
+                {
+                    if (CellSelect[i].Unit.Team != UNIT.Team)
+                    {
+                        var posit = cell.transform.position - CellSelect[i].transform.position;
+                        var pos = cell.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);
+                        bool CanKill = true;
+
+                        foreach (Cell _cell in MovedAfterAttack)
+                        {
+                            if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
+                            if (_cell.transform.position == pos && _cell._choice == "border") { CanKill = false; }
+                        }
+
+                        if (CanKill == true)
+                        {
+                            canMove = false;
+                            CellSelect[i]._choice = "isattack";
+                            CellSelect[i].Unitselected = cell.Unit;
+                            CellSelect[i]._material = SelectRed;
+                            CellSelect[i].SetSelect();
+                        }
+
+                    }
+                }
+
+
+
+            }
+
+            if (canMove == true)
+            {
                 for (int i = 0; i < CellSelect.Count; i++)
                 {
-                     if(CellSelect[i].Unit != null)
-                     {
-                       if (CellSelect[i].Unit.Team != UNIT.Team)
-                       {
-                           var posit = cell.transform.position - CellSelect[i].transform.position;
-                           var pos = cell.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);
-                           bool CanKill = true;
-             
-                           foreach(Cell _cell in MovedAfterAttack)
-                           {
-                               if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
-                               if (_cell.transform.position == pos && _cell._choice == "border") { CanKill = false; }
-                           }
- 
-                           if (CanKill == true)
-                           {
-                               canMove = false;
-                               CellSelect[i]._choice = "isattack";
-                               CellSelect[i].Unitselected = cell.Unit;
-                               CellSelect[i]._material = Resources.Load("Material/select_red", typeof(Material)) as Material;
-                               CellSelect[i].SetSelect();
-                           }
-                          
-                       }
-                     }     
-
-                                 
-
-                }
-                if(canMove == true)
-                {
-                 for (int i = 0; i < CellSelect.Count; i++)
-                 {
                     if ((CellSelect[i].transform.position == cell.transform.position + NeighbourType[2] || CellSelect[i].transform.position == cell.transform.position + NeighbourType[7]) && CellSelect[i].Unit == null && UNIT.Team == "Red")
                     {
 
                         CellSelect[i]._choice = "ismove";
                         CellSelect[i].Unitselected = cell.Unit;
-                        CellSelect[i]._material = Resources.Load("Material/select_green", typeof(Material)) as Material;
+                        CellSelect[i]._material = SelectGreen;
                         CellSelect[i].SetSelect();
 
                     }
@@ -168,23 +186,18 @@ public class BattleField : MonoBehaviour
                     {
                         CellSelect[i]._choice = "ismove";
                         CellSelect[i].Unitselected = cell.Unit;
-                        CellSelect[i]._material = Resources.Load("Material/select_green", typeof(Material)) as Material;
+                        CellSelect[i]._material = SelectGreen;
                         CellSelect[i].SetSelect();
                     }
-                 }
                 }
-
-
-
-
-
-
-
+            }
         }
+
         if(UNIT.Lady == true)
         {
             CellSelect = cell.CellSelectLady;
             MovedAfterAttack = cell.MovedAfterAttackLady;
+
             for(int i = 0; i < CellSelect.Count; i++)
             {
                 if (CellSelect[i].Unit != null)
@@ -193,7 +206,9 @@ public class BattleField : MonoBehaviour
                     {
                         var posit = cell.transform.position - CellSelect[i].transform.position;
                         var pos = new Vector3();
+
                         bool CanKill = true;
+
                         if (posit.x >= 1 && posit.z >= 1)
                         {
                             pos = CellSelect[i].transform.position + new Vector3(-1, 0, -1);
@@ -210,6 +225,7 @@ public class BattleField : MonoBehaviour
                         {
                             pos = CellSelect[i].transform.position + new Vector3(1, 0, -1);
                         }
+
                         foreach (Cell _cell in MovedAfterAttack)
                         {
                             if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
@@ -222,7 +238,7 @@ public class BattleField : MonoBehaviour
                             canMove = false;
                             CellSelect[i]._choice = "isattack";
                             CellSelect[i].Unitselected = cell.Unit;
-                            CellSelect[i]._material = Resources.Load("Material/select_red", typeof(Material)) as Material;
+                            CellSelect[i]._material = SelectRed;
                             CellSelect[i].SetSelect();
                         }
 
@@ -230,6 +246,7 @@ public class BattleField : MonoBehaviour
                     }
                 }
             }
+
             if(canMove == true)
             {
                 for (int i = 0; i < CellSelect.Count; i++)
@@ -239,7 +256,7 @@ public class BattleField : MonoBehaviour
 
                         CellSelect[i]._choice = "ismove";
                         CellSelect[i].Unitselected = cell.Unit;
-                        CellSelect[i]._material = Resources.Load("Material/select_green", typeof(Material)) as Material;
+                        CellSelect[i]._material = SelectGreen;
                         CellSelect[i].SetSelect();
 
                     }
@@ -315,9 +332,12 @@ public class BattleField : MonoBehaviour
             _cell._choice = "Lock";
             _cell.ResetSelect();
         }
+
         List<Cell> CellSelect = cell.CellSelect;
+
         bool canMove = true;
-        _canvas.GetComponent<BattleController>().canCancel = false;
+        BattleController.canCancel = false;
+
         for (int i = 0; i < CellSelect.Count; i++)
         {
             if (CellSelect[i].Unit != null)
@@ -326,7 +346,9 @@ public class BattleField : MonoBehaviour
                 {
                     var posit = cell.transform.position - CellSelect[i].transform.position;
                     var pos = cell.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);
+
                     bool CanKill = true;
+
                     foreach (Cell _cell in cell.MovedAfterAttack)
                     {
                         if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
@@ -338,7 +360,7 @@ public class BattleField : MonoBehaviour
                         canMove = false;
                         CellSelect[i]._choice = "isattack";
                         CellSelect[i].Unitselected = cell.Unit;
-                        CellSelect[i]._material = Resources.Load("Material/select_red", typeof(Material)) as Material;
+                        CellSelect[i]._material = SelectRed;
                         CellSelect[i].SetSelect();
                     }
 
@@ -346,16 +368,17 @@ public class BattleField : MonoBehaviour
             }
 
         }
+
         if (canMove == true)
         {
-            _canvas.GetComponent<BattleController>().canCancel = true;
-            if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
+            BattleController.canCancel = true;
+            if (UITeamText.text == "Red")
             {
-                _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
+                UITeamText.text = "Blue";
             }
-            else if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
+            else if (UITeamText.text == "Blue")
             {
-                _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
+                UITeamText.text = "Red";
             }
             TeamQueue();
         }
@@ -363,64 +386,67 @@ public class BattleField : MonoBehaviour
 
     public void attackedLady(Cell cell, Unit UNIT)
     {
-       foreach (Cell _cell in Cells)
-{
-    _cell._choice = "Lock";
-    _cell.ResetSelect();
-}
-List<Cell> CellSelect = cell.CellSelectLady;
-List<Cell> MovedAfterAttack = cell.MovedAfterAttackLady;
-bool canMove = true;
-_canvas.GetComponent<BattleController>().canCancel = false;
-for (int i = 0; i < CellSelect.Count; i++)
-{
-    if (CellSelect[i].Unit != null)
-    {
-        if (CellSelect[i].Unit.Team != UNIT.Team)
+        foreach (Cell _cell in Cells)
         {
-            var posit = cell.transform.position - CellSelect[i].transform.position;
-            var pos = new Vector3();
-            bool CanKill = true;
-            if (posit.x >= 1 && posit.z >= 1)
-            {
-                pos = CellSelect[i].transform.position + new Vector3(-1, 0, -1);
-            }
-            if (posit.x <= -1 && posit.z <= -1)
-            {
-                pos = CellSelect[i].transform.position + new Vector3(1, 0, 1);
-            }
-            if (posit.x >= 1 && posit.z <= -1)
-            {
-                pos = CellSelect[i].transform.position + new Vector3(-1, 0, 1);
-            }
-            if (posit.x <= -1 && posit.z >= 1)
-            {
-                pos = CellSelect[i].transform.position + new Vector3(1, 0, -1);
-            }
-            foreach (Cell _cell in MovedAfterAttack)
-            {
-                if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
-                if (_cell.transform.position == pos && _cell._choice == "border") { CanKill = false; }
-            }
-
-            if (CanKill == true)
-            {
-                CellSelect[i]._choice = "isattack";
-                CellSelect[i].Unitselected = cell.Unit;
-                CellSelect[i]._material = Resources.Load("Material/select_red", typeof(Material)) as Material;
-                CellSelect[i].SetSelect();
-            }
-
-
+            _cell._choice = "Lock";
+            _cell.ResetSelect();
         }
-    }
 
-    if (CellSelect[i].Unit != null)
-    {
+        List<Cell> CellSelect = cell.CellSelectLady;
+        List<Cell> MovedAfterAttack = cell.MovedAfterAttackLady;
 
-        var posit = cell.transform.position - CellSelect[i].transform.position;
-        foreach (Cell _cell in CellSelect)
+        bool canMove = true;
+        BattleController.canCancel = false;
+
+        for (int i = 0; i < CellSelect.Count; i++)
         {
+            if (CellSelect[i].Unit != null)
+            {
+                if (CellSelect[i].Unit.Team != UNIT.Team)
+                {
+                    var posit = cell.transform.position - CellSelect[i].transform.position;
+                    var pos = new Vector3();
+                    bool CanKill = true;
+                    if (posit.x >= 1 && posit.z >= 1)
+                    {
+                        pos = CellSelect[i].transform.position + new Vector3(-1, 0, -1);
+                    }
+                    if (posit.x <= -1 && posit.z <= -1)
+                    {
+                        pos = CellSelect[i].transform.position + new Vector3(1, 0, 1);
+                    }
+                    if (posit.x >= 1 && posit.z <= -1)
+                    {
+                        pos = CellSelect[i].transform.position + new Vector3(-1, 0, 1);
+                    }
+                    if (posit.x <= -1 && posit.z >= 1)
+                    {
+                        pos = CellSelect[i].transform.position + new Vector3(1, 0, -1);
+                    }
+                    foreach (Cell _cell in MovedAfterAttack)
+                    {
+                        if (_cell.Unit != null && _cell.transform.position == pos) { CanKill = false; }
+                        if (_cell.transform.position == pos && _cell._choice == "border") { CanKill = false; }
+                    }
+
+                    if (CanKill == true)
+                    {
+                        CellSelect[i]._choice = "isattack";
+                        CellSelect[i].Unitselected = cell.Unit;
+                        CellSelect[i]._material = SelectRed;
+                        CellSelect[i].SetSelect();
+                    }
+
+
+                }
+            }
+
+            if (CellSelect[i].Unit != null)
+            {
+                var posit = cell.transform.position - CellSelect[i].transform.position;
+
+                foreach (Cell _cell in CellSelect)
+                {
                     for (int c = 0; c < 8; c++)
                     {
                         if (posit.x >= 1 && posit.z >= 1)
@@ -466,119 +492,126 @@ for (int i = 0; i < CellSelect.Count; i++)
                     }
                 }
 
-    }
-}
+            }
+        }
 
         foreach (Cell _cell in CellSelect)
         {
-            if(_cell._choice == "isattack")
+            if (_cell._choice == "isattack")
             {
                 canMove = false;
             }
         }
 
-if (canMove == true)
-{
-    _canvas.GetComponent<BattleController>().canCancel = true;
-    if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
-    {
-        _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
-    }
-    else if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
-    {
-        _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
-    }
-    TeamQueue();
-}
+        if (canMove == true)
+        {
+            BattleController.canCancel = true;
+            if (UITeamText.text == "Red")
+            {
+                UITeamText.text = "Blue";
+            }
+            else if (UITeamText.text == "Blue")
+            {
+                UITeamText.text = "Red";
+            }
+            TeamQueue();
+        }
     }
 
-    public void f(Cell cell, Unit UNIT, string f)
+    public void ActQueue(Cell cell, Unit UNIT, string f)
     {
         if (f == "ismove")
         {
-            _canvas.GetComponent<BattleController>().CELL = cell;
-            _canvas.GetComponent<BattleController>().UNIT = UNIT;
-            _canvas.GetComponent<BattleController>().conf = true;
+           BattleController.CELL = cell;
+           BattleController.UNIT = UNIT;
+           BattleController.conf = true;
         }
         if (f == "isattack")
         {
-            _canvas.GetComponent<BattleController>().CELL = cell;
-            _canvas.GetComponent<BattleController>().UNIT = UNIT;
-            _canvas.GetComponent<BattleController>().conf = false;
+            BattleController.CELL = cell;
+            BattleController.UNIT = UNIT;
+            BattleController.conf = false;
         }
     }
 
     public void IsMoved(Cell cell, Unit UNIT)
     {
+        cell.Unitselected = null;
 
-                cell.Unitselected = null;
-                if (cell.Unit == null)
-                {
-                    if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Red")
-                    {
-                        _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Blue";
-                    }
-                    else if (_canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text == "Blue")
-                    {
-                        _canvas.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.transform.GetComponent<UnityEngine.UI.Text>().text = "Red";
-                    }
-                    var pos = new Vector3(cell.transform.position.x, UNIT.transform.position.y, cell.transform.position.z);
-                    UNIT.Move(pos);
-                    UNIT.Cell.Unit = null;
-                    cell.Unit = UNIT;
-                    UNIT.Cell = cell;
-                    
+        if (cell.Unit == null)
+        {
+            if (UITeamText.text == "Red")
+            {
+                UITeamText.text = "Blue";
+            }
+            else if (UITeamText.text == "Blue")
+            {
+                UITeamText.text = "Red";
+            }
 
-                }
+            var pos = new Vector3(cell.transform.position.x, UNIT.transform.position.y, cell.transform.position.z);
+
+            UNIT.Move(pos);
+            UNIT.Cell.Unit = null;
+            cell.Unit = UNIT;
+            UNIT.Cell = cell;
+
+
+        }
+
         TeamQueue();
     }
     public void IsAttack(Cell cell, Unit UNIT)
-    {  
-                var posit = UNIT.transform.position - (cell.transform.position + new Vector3(0, 0.678f, 0));
-                var pos = UNIT.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);
-                List<Cell> CellSelect = cell.CellSelect;
-                    if(UNIT.Lady == true)
-                    {
-                     CellSelect = cell.CellSelectLady;
-                    if (posit.x >= 1 && posit.z >= 1)
-                    {
-                        pos = cell.transform.position + new Vector3(-1, 0.678f, -1);
-                    }
-                    if (posit.x <= -1 && posit.z <= -1)
-                    {
-                        pos = cell.transform.position + new Vector3(1, 0.678f, 1);
-                    }
-                    if (posit.x >= 1 && posit.z <= -1)
-                    {
-                        pos = cell.transform.position + new Vector3(-1, 0.678f, 1);
-                    }
-                    if (posit.x <= -1 && posit.z >= 1)
-                    {
-                        pos = cell.transform.position + new Vector3(1, 0.678f, -1);
-                    }
-                    }
+    {
+        var posit = UNIT.transform.position - (cell.transform.position + new Vector3(0, 0.678f, 0));
+        var pos = UNIT.transform.position + new Vector3(-posit.x * 2, 0, -posit.z * 2);
 
-                    UNIT.Move(pos);
-                    UNIT.Cell.Unit = null;
-                    cell.Unit.transform.position = new Vector3(0, 0, 0);
-                    cell.Unit = null;
-                foreach (Cell _cell in CellSelect)
+        List<Cell> CellSelect = cell.CellSelect;
+
+        if (UNIT.Lady == true)
+        {
+            CellSelect = cell.CellSelectLady;
+            if (posit.x >= 1 && posit.z >= 1)
+            {
+                pos = cell.transform.position + new Vector3(-1, 0.678f, -1);
+            }
+            if (posit.x <= -1 && posit.z <= -1)
+            {
+                pos = cell.transform.position + new Vector3(1, 0.678f, 1);
+            }
+            if (posit.x >= 1 && posit.z <= -1)
+            {
+                pos = cell.transform.position + new Vector3(-1, 0.678f, 1);
+            }
+            if (posit.x <= -1 && posit.z >= 1)
+            {
+                pos = cell.transform.position + new Vector3(1, 0.678f, -1);
+            }
+        }
+
+        UNIT.Move(pos);
+        UNIT.Cell.Unit = null;
+        cell.Unit.transform.position = new Vector3(0, 0, 0);
+        cell.Unit.Team = "dead";
+        cell.Unit = null;
+
+        foreach (Cell _cell in CellSelect)
+        {
+            if (_cell.transform.position == pos - new Vector3(0, 0.678f, 0))
+            {
+                UNIT.Cell = _cell;
+                _cell.Unit = UNIT;
+                if (UNIT.Lady == false)
                 {
-                    if (_cell.transform.position == pos - new Vector3(0, 0.678f, 0))
-                    {                       
-                        UNIT.Cell = _cell;
-                        _cell.Unit = UNIT;
-                        if(UNIT.Lady == false)
-                        {
-                            attacked(_cell, UNIT);
-                        }
-                        else if (UNIT.Lady == true)
-                        {
-                            attackedLady(_cell, UNIT);
-                        }
-                        break;
-                    }
+                    attacked(_cell, UNIT);
                 }
+                else if (UNIT.Lady == true)
+                {
+                    attackedLady(_cell, UNIT);
+                }
+                break;
+            }
+        }
 
     }
     

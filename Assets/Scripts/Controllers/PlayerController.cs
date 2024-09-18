@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    BattleField BattleField;
     public void choice(Cell _cell, string _choice , Unit unit, Unit selun)
     {
         
@@ -14,17 +16,17 @@ public class PlayerController : MonoBehaviour
                 break;
             case "select":
                 {
-                    gameObject.GetComponent<BattleField>().OnPointerClickEvent(_cell, unit);
+                   BattleField.OnPointerClickEvent(_cell, unit);
                 }
                 break;
             case "ismove":
                 {
-                    gameObject.GetComponent<BattleField>().f(_cell, selun, "ismove");
+                    BattleField.ActQueue(_cell, selun, "ismove");
                 }
                 break;
             case "isattack":
                 {
-                    gameObject.GetComponent<BattleField>().f(_cell, selun, "isattack");
+                   BattleField.ActQueue(_cell, selun, "isattack");
                 }
                 break;
             default:

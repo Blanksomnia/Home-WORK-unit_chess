@@ -11,28 +11,36 @@ public class Unit : MonoBehaviour
     Material Blue;
     [SerializeField]
     Material Red;
-    public string Team;
-    public bool Lady = false;
-    public Cell Cell;
-  
-    // Start is called before the first frame update
 
+    public string Team;
+
+    public bool Lady = false;
+
+    public Cell Cell;
+
+    MeshRenderer UnitRender;
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        UnitRender = gameObject.GetComponent<MeshRenderer>();
+    }
     public void BecomeLady()
     {
-        if (Team == "Red" && Cell.GetComponent<Cell>().becomeLadyRed == true)
+        if (Team == "Red" && Cell.becomeLadyRed == true && Cell != null)
         {
             Lady = true;
-            gameObject.GetComponent<MeshRenderer>().material = Red;
+            UnitRender.material = Red;
         }
-        if (Team == "Blue" && Cell.GetComponent<Cell>().becomeLadyBlue == true)
+        if (Team == "Blue" && Cell.becomeLadyBlue == true && Cell != null)
         {
             Lady = true;
-            gameObject.GetComponent<MeshRenderer>().material = Blue;
+            UnitRender.material = Blue;
         }
     }
-    public void Move(UnityEngine.Vector3 ce)
+    public void Move(UnityEngine.Vector3 pos)
     {
-        gameObject.transform.position = ce;
+        gameObject.transform.position = pos;
     }
     
 }
