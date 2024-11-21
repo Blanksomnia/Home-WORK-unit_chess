@@ -3,6 +3,7 @@
 public class CharacterAiming : MonoBehaviour 
 {
     public float aimDuration = 0.18f;
+    [SerializeField] Transform Points;
     public Transform cameraLookAt;
     public Cinemachine.AxisState xAxis = new Cinemachine.AxisState(-180, 180, true, false, 500, 0.02f, 0.02f, "Mouse X", false);
     public Cinemachine.AxisState yAxis = new Cinemachine.AxisState(-85, 85, false, false, 300, 0.02f, 0.02f, "Mouse Y", true);
@@ -55,6 +56,7 @@ public class CharacterAiming : MonoBehaviour
 
         // Rotate player left / right
         var euler = transform.eulerAngles;
+        Points.eulerAngles = new Vector3(0, 0, euler.y + 180);
         euler.y = xAxis.Value;
         transform.eulerAngles = euler;
     }

@@ -161,18 +161,25 @@ public class RaycastWeapon : MonoBehaviour
             var hitBox = hitInfo.collider.GetComponent<HitBox>();
             if (hitBox) {
 
-                if(hitBox.gameObject.layer == 9)
-                Instantiate(PrefabParticleBlood, hitBox.transform, false).AddComponent<ParticleScript>().Activate(4);
+                if(hitBox.gameObject.layer == 10)
+                {
+                    GameObject PART = Instantiate(PrefabParticleBlood, hitBox.transform.position, new Quaternion());
+                    PART.transform.SetParent(hitBox.transform);
+                    PART.AddComponent<ParticleScript>().Activate(4);
+                    
+                }
+
+
 
                 hitBox.OnRaycastHit(this, ray.direction);
             }
 
             if(hitInfo.collider.gameObject.layer == 0)
             {
-                Instantiate(imageHolePool, hitInfo.collider.gameObject.transform, false).AddComponent<ParticleScript>().Activate(10);
+                Instantiate(imageHolePool, hitInfo.collider.gameObject.transform.position, new Quaternion()).AddComponent<ParticleScript>().Activate(10);
             }
 
-            Instantiate(particleP, hitInfo.collider.gameObject.transform, false).AddComponent<ParticleScript>().Activate(2);
+            Instantiate(particleP, hitInfo.collider.gameObject.transform.position, new Quaternion()).AddComponent<ParticleScript>().Activate(2);
         }
 
         if (bullet.tracer) {

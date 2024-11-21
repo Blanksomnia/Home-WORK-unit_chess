@@ -5,35 +5,34 @@ using UnityEngine;
 public class AutoShoot : MonoBehaviour
 {
     [SerializeField] float LimitDistance = 20;
+    private CharacterAiming charct;
     private ActiveWeapon weapon;
-    private CameraControl camera;
     [SerializeField] Transform Enemies;
     private List<Transform> targets;
 
     private void Awake()
     {
+        charct = GetComponent<CharacterAiming>();
         weapon = GetComponent<ActiveWeapon>();
-        foreach(CameraControl cam in GetComponentsInChildren<CameraControl>())
+        foreach(Transform t in Enemies.GetComponentInChildren<Transform>())
         {
-            camera = cam;
+                targets.Add(t);
         }
-        for (int i = 0; Enemies.childCount > i; i++)
-        {
-            targets.Add(Enemies.GetChild(i));
-        }
+
     }
 
     void LateUpdate()
     {
         if (weapon.GetWeapon(weapon.activeWeaponIndex).ammoCount > 0)
         {
-            
             int st = 5050;
 
+            if(targets.Count > 0)
             for (int i = 0; targets.Count > i; i++)
             {
                 float Distance = Vector3.Distance(transform.position, targets[i].transform.position);
-                if (!Physics.Raycast(transform.position, targets[i].transform.position, LimitDistance, 0))
+                Debug.DrawRay(transform.position, targets[i].transform.position, Color.red);
+                if (!Physics.Raycast(transform.position, targets[i].transform.position, Distance, 0))
                 {
                     if (st == 5050)
                     {
@@ -52,22 +51,23 @@ public class AutoShoot : MonoBehaviour
 
             }
 
-            if (st != 5050)
+            if (st != 5050 && Vector3.Distance(transform.position, targets[st].transform.position) <= LimitDistance)
             {
-                camera.CanUse = false;
+                print("detect");
+                charct.enabled = false;
                 weapon.GetWeapon(weapon.activeWeaponIndex).StartFiring();
                 transform.LookAt(targets[st].transform);
             }
             else
             {
-                camera.CanUse = true;
+                charct.enabled = true;
             }
         }
         else
         {
-            camera.CanUse = true;
+            charct.enabled = true;
         }
-       
+
 
     }
 }
