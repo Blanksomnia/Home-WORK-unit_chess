@@ -9,6 +9,7 @@ TagManager:
   - Ammo
   - Weapon
   - Ground
+  - Cloth
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Pickup
   - Character
   - Hitbox
-  - 
+  - Box
   - 
   - 
   - 

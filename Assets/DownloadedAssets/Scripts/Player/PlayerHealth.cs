@@ -12,6 +12,7 @@ public class PlayerHealth : Health
     CharacterAiming aiming;
     VolumeProfile postProcessing;
     CameraManager cameraManager;
+    [SerializeField] AudioSource audioDamage;
 
     protected override void OnStart() {
         ragdoll = GetComponent<Ragdoll>();
@@ -34,6 +35,8 @@ public class PlayerHealth : Health
 
     protected override void OnDamage(Vector3 direction) {
         UpdateVignette();
+        if(audioDamage != null)
+            audioDamage.Play();
     }
 
     protected override void OnHeal(float amount) {

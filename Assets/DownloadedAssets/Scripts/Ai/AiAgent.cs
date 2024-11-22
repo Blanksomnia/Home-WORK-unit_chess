@@ -9,6 +9,7 @@ public class AiAgent : MonoBehaviour
     public AiAgentConfig config;
 
     [HideInInspector] public AiStateMachine stateMachine;
+    [HideInInspector] public WeaponIk IkWeapon;
     [HideInInspector] public NavMeshAgent navMeshAgent;
     [HideInInspector] public Ragdoll ragdoll;
     [HideInInspector] public SkinnedMeshRenderer mesh;
@@ -22,6 +23,7 @@ public class AiAgent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        IkWeapon = GetComponent<WeaponIk>();
         ragdoll = GetComponent<Ragdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         ui = GetComponentInChildren<UIHealthBar>();

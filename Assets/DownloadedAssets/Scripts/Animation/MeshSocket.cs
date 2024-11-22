@@ -16,10 +16,18 @@ public class MeshSocket : MonoBehaviour
     void Start()
     {
         Animator animator = GetComponentInParent<Animator>();
-        attachPoint = new GameObject("socket" + socketId).transform;
-        attachPoint.SetParent(animator.GetBoneTransform(bone));
-        attachPoint.localPosition = offset;
-        attachPoint.localRotation = Quaternion.Euler(rotation);
+        if (animator.avatar != null)
+        {
+            attachPoint = new GameObject("socket" + socketId).transform;
+
+            if (attachPoint != null)
+            {
+                attachPoint.SetParent(animator.GetBoneTransform(bone));
+                attachPoint.localPosition = offset;
+                attachPoint.localRotation = Quaternion.Euler(rotation);
+            }
+        }
+      
     }
 
     public void Attach(Transform objectTransform) {

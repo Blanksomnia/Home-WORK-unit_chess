@@ -34,6 +34,7 @@ public class AiAttackTargetState : AiState
 
     private void UpdateFiring(AiAgent agent) {
         if (agent.targeting.TargetInSight) {
+            if(Vector3.Distance( agent.IkWeapon.targetTransform.position, agent.transform.position) <=  agent.config.attackStoppingDistance)
             agent.weapons.SetFiring(true);
         } else {
             agent.weapons.SetFiring(false);

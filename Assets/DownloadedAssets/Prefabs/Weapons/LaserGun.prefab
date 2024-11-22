@@ -89,7 +89,7 @@ MonoBehaviour:
   holsterSocket: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 3073
   isFiring: 0
   debug: 0
   fireRate: 15
@@ -110,7 +110,6 @@ MonoBehaviour:
   raycastOrigin: {fileID: 3968888316308642418}
   recoil: {fileID: 0}
   magazine: {fileID: 6287196464924993312}
-  isMeleeWeapon: 0
 --- !u!114 &8631068539739982480
 MonoBehaviour:
   m_ObjectHideFlags: 0

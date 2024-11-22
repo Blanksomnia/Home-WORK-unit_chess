@@ -5,7 +5,7 @@ using UnityEngine;
 public class AiHealth : Health
 {
     AiAgent agent;
-
+    [SerializeField] AudioSource audioDamage;
     protected override void OnStart() {
         agent = GetComponent<AiAgent>();
     }
@@ -17,6 +17,7 @@ public class AiHealth : Health
     }
 
     protected override void OnDamage(Vector3 direction) {
-
+        if(audioDamage != null)
+        audioDamage.Play();
     }
 }

@@ -32,16 +32,9 @@ public class InteractWithMeeleWeapon : MonoBehaviour
              _active = false;
             _anim.Play("Slash");
             Target();
-            StartCoroutine(PlayToAnim());
             StartCoroutine(IntervalToAttack());
         }
      
-    }
-
-    IEnumerator PlayToAnim()
-    {
-        yield return _wait;
-        _anim.Play("Blend Tree");
     }
 
     IEnumerator IntervalToAttack()
@@ -56,17 +49,15 @@ public class InteractWithMeeleWeapon : MonoBehaviour
 
     private void Target()
     {
-            Collider[] rangeChecks = Physics.OverlapSphere(transform.position, 5, character);
+            Collider[] rangeChecks = Physics.OverlapSphere(transform.position, 1.5f, character);
 
             if (rangeChecks.Length > 0)
             {
                 print(rangeChecks[0].gameObject.name);
-                if (Physics.Linecast(_posStart.position, rangeChecks[0].transform.position, character))
-                {
+                Health healthchar = rangeChecks[0].gameObject.GetComponent<Health>();
 
-                    DamageUnits(rangeChecks[0].gameObject.GetComponent<HitBox>().health);
-                }
-
+                if(healthchar.currentHealth > 0)
+                DamageUnits(healthchar);
 
             }
        

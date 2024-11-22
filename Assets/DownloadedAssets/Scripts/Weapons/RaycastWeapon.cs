@@ -163,7 +163,7 @@ public class RaycastWeapon : MonoBehaviour
 
                 if(hitBox.gameObject.layer == 10)
                 {
-                    GameObject PART = Instantiate(PrefabParticleBlood, hitBox.transform.position, new Quaternion());
+                    GameObject PART = Instantiate(PrefabParticleBlood, hitInfo.point, new Quaternion());
                     PART.transform.SetParent(hitBox.transform);
                     PART.AddComponent<ParticleScript>().Activate(4);
                     
@@ -176,11 +176,12 @@ public class RaycastWeapon : MonoBehaviour
 
             if(hitInfo.collider.gameObject.layer == 0)
             {
-                Instantiate(imageHolePool, hitInfo.collider.gameObject.transform.position, new Quaternion()).AddComponent<ParticleScript>().Activate(10);
+                Instantiate(imageHolePool, hitInfo.point, new Quaternion()).AddComponent<ParticleScript>().Activate(10);
+                Instantiate(particleP, hitInfo.point, new Quaternion()).AddComponent<ParticleScript>().Activate(2);
             }
-
-            Instantiate(particleP, hitInfo.collider.gameObject.transform.position, new Quaternion()).AddComponent<ParticleScript>().Activate(2);
         }
+
+            
 
         if (bullet.tracer) {
             bullet.tracer.transform.position = end;

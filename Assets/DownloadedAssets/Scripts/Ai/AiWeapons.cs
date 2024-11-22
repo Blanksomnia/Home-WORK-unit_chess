@@ -180,6 +180,8 @@ public class AiWeapons : MonoBehaviour
         animator.SetBool("equip", false);
         weaponIk.enabled = false;
         yield return new WaitForSeconds(0.5f);
+
+        if(animator.layerCount == 2)
         while (animator.GetCurrentAnimatorStateInfo(1).normalizedTime < 1.0f) {
             yield return null;
         }

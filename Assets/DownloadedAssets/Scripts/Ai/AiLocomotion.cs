@@ -7,10 +7,12 @@ public class AiLocomotion : MonoBehaviour
 {
     NavMeshAgent agent;
     Animator animator;
+    AudioSource audio;
 
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
     }
@@ -20,8 +22,17 @@ public class AiLocomotion : MonoBehaviour
     {
         if (agent.hasPath) {
             animator.SetFloat("speed", agent.velocity.magnitude);
+            if (agent.velocity.magnitude > 0)
+            {
+                audio.mute = false;  
+            }
+            else
+            {
+                audio.mute = true;
+            }
         } else {
             animator.SetFloat("speed", 0);
+            audio.mute = true;
         }
     }
 }

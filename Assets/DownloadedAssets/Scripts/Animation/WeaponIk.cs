@@ -31,6 +31,7 @@ public class WeaponIk : MonoBehaviour
         Animator animator = GetComponent<Animator>();
         boneTransforms = new Transform[humanBones.Length];
         for (int i = 0; i < boneTransforms.Length; i++) {
+            if(animator.avatar != null)
             boneTransforms[i] = animator.GetBoneTransform(humanBones[i].bone);
         }
     }
