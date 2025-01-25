@@ -1,0 +1,10 @@
+Library/
+.vs
+Logs/
+Temp/
+obj/
+UserSettings/
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+.vsconfig
+Shooter FPS.sln
