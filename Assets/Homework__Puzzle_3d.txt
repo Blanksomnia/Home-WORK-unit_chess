@@ -1,0 +1,58 @@
+
+/// Материал для работы: Головоломка 3D
+/// Сеттинг: Dungeon
+
+/// Ассеты:
+
+1.мяч - https://assetstore.unity.com/packages/3d/props/ball-pack-446 
+
+2.окружение - https://assetstore.unity.com/packages/3d/environments/dungeons/low-poly-free-dungeon-pack-191979 
+
+3.частицы - https://assetstore.unity.com/packages/vfx/particles/spells/48-particle-effect-pack-13998 
+
+4.GUI - https://assetstore.unity.com/packages/2d/gui/2d-casual-gui-play-light-games-233493
+
+
+/// Скрипты:
+
+Bonus:
+
+0.ActivateBonus - Хранит данные активировать ли бонус при запуске игры
+1.AnimationBonus -Анимация движения бонуса
+2.Bonus - общее характеристики бонусов
+3.Coin : Bonus - взаимодействие игрока с монетами
+4.EffectHealth : Bonus - взаимодействие игрока с зельем здоровья
+5.EffectSpeed : Bonus - взаимодействие игрока с зельем скорости
+6.GetPlayerMemories - даем детям ссылку на PlayerMemories тем, у кого есть скрипт Bonus  
+
+
+UI: 
+
+0.GameOverButtom - кнопка рестрата после проигрыша и выигрыша
+1.Interfaces - хранит ссылки на интерфэйсы
+2.UpdGUI - обновление интерфэйса
+
+
+Map:
+
+0.GetOnMapLocate - создаёт значёк
+1.GetProperties - даёт детям характеристики тем, у кого есть скрипт GetOnMapLoacate
+2.MapPointLocate - Отображение значка на карте
+
+
+Player:
+
+0.InputPlayer - взаимодействие игрока с клавиатурой
+1.PlayerMemory - хранит данные игрока и логика урона, здоровья и т.д
+
+
+Traps:
+
+0.Trap - нанесения ловушеками урона игроку
+
+
+SaveLoad - Сохранение и загрузка данных в XML файле
+
+
+
+

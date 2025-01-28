@@ -7,4 +7,5 @@ UserSettings/
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 .vsconfig
+.gitignore
 My project (7).sln

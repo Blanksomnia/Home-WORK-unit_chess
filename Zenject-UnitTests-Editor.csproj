@@ -87,8 +87,8 @@
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Other\ZenjectProfileTest.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Other\TestSubContainers.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\BindFeatures\TestRebind.cs" />
-    <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Conditions\TestConditionsBasic.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Other\TestTestUtil.cs" />
+    <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Conditions\TestConditionsBasic.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Factories\Bindings\TestFactoryFromGetter0.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Injection\TestTestOptional.cs" />
     <Compile Include="Assets\Plugins\Zenject\OptionalExtras\UnitTests\Editor\Other\TestLazy.cs" />

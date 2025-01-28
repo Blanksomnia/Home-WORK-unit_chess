@@ -280,8 +280,8 @@
     <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\Diagnostics\UnityDebugSink.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\CancellationToken.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\Triggers\ObservableTrigger2DTrigger.cs" />
-    <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\MainThreadDispatcher.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\Triggers\ObservableDragTrigger.cs" />
+    <Compile Include="Assets\Plugins\UniRx\Scripts\UnityEngineBridge\MainThreadDispatcher.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\Operators\Throw.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\Operators\Throttle.cs" />
     <Compile Include="Assets\Plugins\UniRx\Scripts\System\Unit.cs" />
