@@ -1,0 +1,15 @@
+
+Puzzle -
+ассеты:
+UI - https://assetstore.unity.com/packages/2d/gui/icons/2d-casual-ui-hd-82080
+
+Scripts:
+
+ControllerBall - управление тапами и клавиатурой;
+ListPoints - список точек;
+Point - хранит информацию о соседних точках и статус точки;
+LogicPoints - логика хода шара и обновление статуса точек после поворота;
+OnClickDownloadScene - загрузка сцена(для кнопки рестарта, выбор уровня и меню);
+
+EditorGUIpoints- gui редактора и выбора точек;
+PointsEdit- логика редактора добавление/удаление 
