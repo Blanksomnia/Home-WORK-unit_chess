@@ -11,6 +11,8 @@ namespace Installers
         [SerializeField] private GameObject _building;
         [SerializeField] private GameObject _player;
         [SerializeField] private GameObject _stick;
+        [SerializeField] private GameObject _hearth;
+        [SerializeField] private GameObject _star;
         
         public override void InstallBindings()
         {
@@ -24,6 +26,8 @@ namespace Installers
             Container.BindInstance(_building).WithId(Constants.BuildingIdentifier);
             Container.BindInstance(_player).WithId(Constants.PlayerIdentifier);
             Container.BindInstance(_stick).WithId(Constants.StickIdentifier);
+            Container.BindInstance(_star).WithId(Constants.StarIdentifier);
+            Container.BindInstance(_hearth).WithId(Constants.HearthIdentifier);
         }
 
         private void BindModels()
@@ -33,6 +37,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<PlayerModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<StickModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<TimeModel>().AsSingle();
+
         }
 
         private void BindPresenters()
@@ -40,6 +45,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<InputPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<StickBuildPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoopPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BonusGeneratorPresenter>().AsSingle();
         }
     }
 }

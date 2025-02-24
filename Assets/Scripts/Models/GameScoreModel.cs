@@ -7,6 +7,7 @@ namespace Models
 {
     public sealed class GameScoreModel : IGameScoreModel
     {
+
         private const string BestScoreKey = "BestScore";
         private readonly ISaveLoadDataHandler _saveLoadDataHandler;
         private ReactiveProperty<int> _currentScore;

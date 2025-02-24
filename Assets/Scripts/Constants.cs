@@ -7,6 +7,8 @@ public static class Constants
     public const string BuildingIdentifier = "Building";
     public const string PlayerIdentifier = "Player";
     public const string StickIdentifier = "Stick";
+    public const string StarIdentifier = "Star";
+    public const string HearthIdentifier = "Hearth";
 
     public static int DefaultPoolCount = 3;
 

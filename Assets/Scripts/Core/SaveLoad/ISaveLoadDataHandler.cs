@@ -1,4 +1,6 @@
-﻿namespace Core.SaveLoad
+﻿using UniRx;
+
+namespace Core.SaveLoad
 {
     /// <summary>
     /// Implement this for custom save/load of standard types
@@ -14,5 +16,6 @@
         bool TryLoadInt(string key, out int value);
 
         void ClearSavedData();
+
     }
 }
