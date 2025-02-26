@@ -37,7 +37,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<PlayerModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<StickModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<TimeModel>().AsSingle();
-
+            
         }
 
         private void BindPresenters()

@@ -1,5 +1,6 @@
 using Core.SaveLoad;
 using Messages;
+using Models.Interfaces;
 using Presenters.Interfaces;
 using System;
 using UniRx;
@@ -17,59 +18,65 @@ namespace Presenters
 
         private readonly IMessageBroker _messageBroker;
         private readonly IBonusModel _bonuses;
-        private readonly Vector3 _startPos;
+        private readonly IBuildingModel _building;
         private readonly CompositeDisposable _compositeDisposable = new();
+        Bonuses type;
 
         GameObject bonusObj;
-        Vector2 PosBonus;
-
+        GameObject StarGM;
+        GameObject HearthGM;
         public void Initialize()
         {
             Subscribe();
-            _bonuses.ResetCollect();
+            _bonuses.ResetCollect(true);
+            CreateBonus();
         }
 
-        public BonusGeneratorPresenter(IMessageBroker messageBroker, CompositeDisposable compositeDisposable, IBonusModel bonuses, [Inject(Id = "Start")] Transform startPosition)
+        public BonusGeneratorPresenter(IMessageBroker messageBroker, IBonusModel bonuses, IBuildingModel buildingModel, [Inject(Id = "Star")] GameObject starB, [Inject(Id = "Hearth")] GameObject hearthB)
         {
             _messageBroker = messageBroker;
-            _compositeDisposable = compositeDisposable;
             _bonuses = bonuses;
-            _startPos = startPosition.position;
+            StarGM = starB;
+            HearthGM = hearthB;
+            _building = buildingModel;
         }
 
         private void Subscribe()
         {
-            _messageBroker.Receive<StickFallCompletedMessage>().Subscribe(OnStickFallCompleted).AddTo(_compositeDisposable);
             _messageBroker.Receive<MoveFailedMessage>().Subscribe(OnMoveFailed).AddTo(_compositeDisposable);
             _messageBroker.Receive<MoveSuccessfulMessage>().Subscribe(OnMoveSuccessfull).AddTo(_compositeDisposable);
         }
 
-        private void OnStickFallCompleted(StickFallCompletedMessage message)
-        {
-
-        }
-
         private void OnMoveFailed(MoveFailedMessage message)
         {
-
+            _bonuses.SaveBonuses();
         }
 
         private void OnMoveSuccessfull(MoveSuccessfulMessage message)
         {
-            if (bonusObj != null)
-            {
-                _bonuses.ToCollect();
-            }
-            _bonuses.SaveBonuses();
+            _bonuses.ToCollect(type);
+            DeleteBonus();
             CreateBonus();
         }
 
+        private GameObject BonusType(Bonuses type)
+        {
+            switch (type)
+            {
+                case Bonuses.Star: return StarGM;
+                case Bonuses.Hearth: return HearthGM;
+                default: return null;
+            }
+
+        }
 
         private void CreateBonus()
         {
             Random random = new Random();
+            int result = random.Next(0, 2);
             Bonuses bonus;
-            if (random.Next(0, 1) == 0)
+            
+            if (result == 0)
             {
                 bonus = Bonuses.Star;
             }
@@ -77,15 +84,18 @@ namespace Presenters
             {
                 bonus = Bonuses.Hearth;
             }
-
-            bonusObj = _bonuses.CreateBonus(bonus, PosBonus);
+            type = bonus;
+            bonusObj = UnityEngine.Object.Instantiate(BonusType(bonus), new Vector3(2f + _building.GetPositionForPlayer(true).x, 0, 0), Quaternion.identity);
         }
 
         private void DeleteBonus()
         {
-            bonusObj.SetActive(false);
-            UnityEngine.Object.Destroy(bonusObj);
-            bonusObj = null;
+            if(_bonuses != null)
+            {
+                bonusObj.SetActive(false);
+                UnityEngine.Object.Destroy(bonusObj);
+                bonusObj = null;
+            }
 
         }
 

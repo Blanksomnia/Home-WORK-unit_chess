@@ -10,57 +10,52 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 
+public struct StarsUpd { }
+
+public struct HearthsUpd { }
+
+
+
 namespace Models
 {
     public sealed class BonusModel : IBonusModel
     {
         //Score bonuses
-        private const string BonusesStarsKey = "StarKey";
-        private const string BonusesHearthsKey = "HearthKey";
-        public IReadOnlyReactiveCollection<Bonuses> CollectedBonuses => BonusesScore;
+        private const string BonusesHearthsKeyBest = "HearthKeyBest";
+        private const string BonusesStarsKeyBest = "StarKeyBest";
+        public ReactiveProperty<int> stars => _stars;
+        public ReactiveProperty<int> starsBest => _starsBest;
+        public ReactiveProperty<int> hearths => _hearths;
+        public ReactiveProperty<int> hearthsBest => _hearthsBest;
 
-        private IReactiveCollection<Bonuses> BonusesScore;
+
+        private ReactiveProperty<int> _stars = new ReactiveProperty<int>(0);
+        private ReactiveProperty<int> _starsBest = new ReactiveProperty<int>(0);
+        private ReactiveProperty<int> _hearths = new ReactiveProperty<int>(0);
+        private ReactiveProperty<int> _hearthsBest = new ReactiveProperty<int>(0);
 
         private readonly ISaveLoadDataHandler _saveLoadDataHandler;
-        public BonusModel(ISaveLoadDataHandler saveLoadDataHandler) => _saveLoadDataHandler = saveLoadDataHandler;
+
+        private List<Bonuses> collect = new();
+        public BonusModel(ISaveLoadDataHandler saveLoadDataHandler) 
+        {
+            _saveLoadDataHandler = saveLoadDataHandler;
+        }
 
         public void SaveBonuses()
         {
-            int Stars = 0;
-            int Hearths = 0;
-
-            for (int i = 0; i < BonusesScore.Count; i++)
-            {
-                if (BonusesScore[i] == Bonuses.Star)
-                {
-                    Stars++;
-                }
-
-                if (BonusesScore[i] == Bonuses.Hearth)
-                {
-                    Hearths++;
-                }
-
-            }
-
-            _saveLoadDataHandler.SaveInt(BonusesStarsKey, Stars);
-            _saveLoadDataHandler.SaveInt(BonusesHearthsKey, Hearths);
+            if (_stars.Value > _starsBest.Value) { _starsBest.Value = _stars.Value; }
+            if (_hearths.Value > _hearthsBest.Value) { _hearthsBest.Value = _hearths.Value; }
+            _saveLoadDataHandler.SaveInt(BonusesHearthsKeyBest, _hearthsBest.Value);
+            _saveLoadDataHandler.SaveInt(BonusesStarsKeyBest, _starsBest.Value);
         }
 
         private void LoadBonuses()
         {
-            ReactiveProperty<int> Stars = new ReactiveProperty<int>(_saveLoadDataHandler.TryLoadInt(BonusesStarsKey, out var ScoreS) ? ScoreS : 0);
-            ReactiveProperty<int> Hearths = new ReactiveProperty<int>(_saveLoadDataHandler.TryLoadInt(BonusesHearthsKey, out var ScoreH) ? ScoreH : 0);
-
-            for (int i = 0; i < Stars.Value; i++)
-            {
-                BonusesScore.Add(Bonuses.Star);
-            }
-
-            for (int i = 0; i < Hearths.Value; i++)
-            {
-                BonusesScore.Add(Bonuses.Hearth);
-            }
+            _stars = new ReactiveProperty<int>(0);
+            _hearths = new ReactiveProperty<int>(0);
+            _starsBest = new ReactiveProperty<int>(_saveLoadDataHandler.TryLoadInt(BonusesStarsKeyBest, out var ScoreHB) ? ScoreHB : 0);
+            _hearthsBest = new ReactiveProperty<int>(_saveLoadDataHandler.TryLoadInt(BonusesHearthsKeyBest, out var ScoreSB) ? ScoreSB : 0);
 
         }
 
@@ -68,48 +63,39 @@ namespace Models
         {
             LoadBonuses();
         }
-        //
 
-
-        //ModelGameobject
-
-        GameObject StarGM;
-        GameObject HearthGM;
-        Bonuses TypeBonus;
-
-        public BonusModel([Inject(Id = "Star")] GameObject starB, [Inject(Id = "Hearth")] GameObject hearthB)
+        public void ToCollect(Bonuses type)
         {
-            StarGM = starB;
-            HearthGM = hearthB;
+            if(type == Bonuses.Star) { _stars.Value++; }
+            if(type == Bonuses.Hearth) { _hearths.Value++; }
+            collect.Add(type);
         }
 
-        private GameObject BonusType(Bonuses type)
+        public void ResetCollect(bool ResetAll)
         {
-            switch (type)
+            if(ResetAll)
             {
-                case Bonuses.Star: return StarGM;
-                case Bonuses.Hearth: return HearthGM;
-                default: return null;
+                _stars = new ReactiveProperty<int>(0);
+                _hearths = new ReactiveProperty<int>(0);
+                collect.Clear();
+
             }
+            else 
+            { 
+                Bonuses type = collect[collect.Count - 1];
+                collect.RemoveAt(collect.Count - 1);
+                if(type == Bonuses.Hearth)
+                {
+                    _hearths.Value--;
+                }
 
+                if(type == Bonuses.Star)
+                {
+                    _stars.Value--;
+                }
+            }
         }
 
-        public GameObject CreateBonus(Bonuses type, Vector2 to)
-        {
-            TypeBonus = type;
-            return UnityEngine.Object.Instantiate(BonusType(type), to, Quaternion.identity);
-        }
 
-        public void ToCollect()
-        {
-            BonusesScore.Add(TypeBonus);
-        }
-
-        public void ResetCollect()
-        {
-            BonusesScore.Clear();
-        }
-
-        //
     }
 }

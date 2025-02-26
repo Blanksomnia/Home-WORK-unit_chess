@@ -12,14 +12,16 @@ public enum Bonuses
 
 public interface IBonusModel : IInitializable
 {
-    IReadOnlyReactiveCollection<Bonuses> CollectedBonuses { get; }
+    ReactiveProperty<int> stars { get; }
+    ReactiveProperty<int> starsBest { get; }
+    ReactiveProperty<int> hearths { get; }
+    ReactiveProperty<int> hearthsBest { get; }
 
-    GameObject CreateBonus(Bonuses type, Vector2 to);
 
     void SaveBonuses();
 
-    void ToCollect();
+    void ToCollect(Bonuses type);
 
-    void ResetCollect();
+    void ResetCollect(bool ResetAll);
 
 }

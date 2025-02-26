@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5199404866347949282}
   - component: {fileID: 2469792174324033688}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: heartSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
