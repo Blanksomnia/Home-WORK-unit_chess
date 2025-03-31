@@ -1,0 +1,288 @@
+{
+    "name": "MainControllInput",
+    "maps": [
+        {
+            "name": "Camera",
+            "id": "229df24b-dcb7-4ef1-8425-9aa5935e9e59",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "3ab777f4-7416-4cfd-b34e-739cd58cebc1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "X",
+                    "type": "Button",
+                    "id": "679d3425-d0b9-4c97-9ce5-f55f391648f7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "117dc604-451e-46d8-b46e-750b48bdca30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Z",
+                    "type": "Button",
+                    "id": "ca91e239-026a-4a8c-861d-48c3f60acf91",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Axis",
+                    "id": "77230881-3705-4d6f-9f38-f0da05370c60",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Y",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "53aa17d7-3c2d-42b4-bc72-186dbde37911",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "83b7edf5-d684-48d5-8534-0d6f5bb80681",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Axis",
+                    "id": "fe58fe19-2ad2-4bee-b0bb-d4f722536181",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Z",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1fd2feac-a06b-483d-a623-a316e5ce7cb3",
+                    "path": "<Mouse>/delta/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Z",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "da211aa5-31a0-48c4-ba4a-f1b9faab6019",
+                    "path": "<Mouse>/delta/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Z",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "1ef0bb01-93bc-4c53-ad9b-84c79f1063a8",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Axis",
+                    "id": "b9b9b2b1-f3a4-4143-b7d5-c54e883350e9",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "X",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "33e686c6-4edf-490f-b559-e814502f0dbd",
+                    "path": "<Mouse>/delta/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "X",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e5f3c1e9-03e7-4254-bb39-a0bebe80fc44",
+                    "path": "<Mouse>/delta/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "X",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "ManageUnits",
+            "id": "1e135247-8aba-41b2-9ef1-7abae0c2b893",
+            "actions": [
+                {
+                    "name": "SelectUnit",
+                    "type": "Button",
+                    "id": "58aa72fc-aa60-472a-9f25-1c9f8fb8553a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectGroupUnits",
+                    "type": "Button",
+                    "id": "a07b0917-1cdf-42b7-b0f9-cea1ee474be8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTo",
+                    "type": "Button",
+                    "id": "72cbe899-64e8-48ab-8a34-3e09d1a9f124",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DeleteUnit",
+                    "type": "Button",
+                    "id": "f4e1def7-9ec7-45fb-8311-8790c3c4475f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddUnit",
+                    "type": "Button",
+                    "id": "848f5d29-79fd-4631-a965-81df3769a780",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ClearSelected",
+                    "type": "Button",
+                    "id": "f2b68d4e-efe4-4dcc-aa08-8b49b865d380",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed44abdc-cd73-4d7f-8a3c-f2efaff722de",
+                    "path": "<Keyboard>/s",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectGroupUnits",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0adc27f-cbec-4d65-a289-2485f0080a97",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectUnit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a202045-7e51-4f49-be85-29beab2c92d8",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5f61a86-e86c-42aa-9acd-b443d78607e7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeleteUnit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdf39e3a-36f8-48a1-9ee4-2d58a6a867db",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddUnit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "729a7c67-6dc4-4cb7-8705-7f0b9149d454",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClearSelected",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

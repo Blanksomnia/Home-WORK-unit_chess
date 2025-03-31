@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 312f90cd17f69a24f87737bbbe654a32
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - parentUnits: {instanceID: 0}
+  - mines: {instanceID: 0}
+  - worker: {fileID: 2690226977738001618, guid: 198f9f3b176e4b646b4bb348a95c26fa, type: 3}
+  - knight: {fileID: 6486893356704507554, guid: cefd6dea429248f40bed4d958b0aa236, type: 3}
+  - mineSelect: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
