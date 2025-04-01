@@ -650,7 +650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9af7e4f566220e48a30bd645ef73d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  product: {fileID: 1451759209}
+  cost: {fileID: 2057922308}
+  name: {fileID: 348665656}
 --- !u!1 &348665654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9af7e4f566220e48a30bd645ef73d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  product: {fileID: 882437669}
+  cost: {fileID: 1639718404}
+  name: {fileID: 1542237985}
 --- !u!1001 &527135105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1663,7 +1665,7 @@ MonoBehaviour:
     m_Bits: 193
   obsticalPoint:
     serializedVersion: 2
-    m_Bits: 449
+    m_Bits: 1
 --- !u!114 &603606370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2702,6 +2704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell: {fileID: 7543640227121536617}
+  gui: {fileID: 517395338}
   cost:
   - {fileID: 882437672}
   - {fileID: 882437671}
@@ -5074,6 +5077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell: {fileID: 7543640227638699433}
+  gui: {fileID: 328548351}
   cost:
   - {fileID: 1451759208}
 --- !u!1001 &1466315120
@@ -5288,8 +5292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792911ede2e03094a978bca9c3497ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 7543640227638699433}
   value: {fileID: 1961340841621800650}
+  nameCell: {fileID: 2573282846217439744}
 --- !u!1 &1560214050
 GameObject:
   m_ObjectHideFlags: 0
@@ -7302,8 +7306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792911ede2e03094a978bca9c3497ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 7543640227121536617}
   value: {fileID: 1961340842211294474}
+  nameCell: {fileID: 2573282845628363200}
 --- !u!1001 &2143790253
 PrefabInstance:
   m_ObjectHideFlags: 0

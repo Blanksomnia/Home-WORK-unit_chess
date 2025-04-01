@@ -29,9 +29,14 @@ public class CellUnit : MonoBehaviour
         UpdScore();
     }
 
+    private void Awake()
+    {
+        cell.GetName(_type);
+    }
+
     private void UpdScore()
     {
-        cell.GetValue();
+        cell.GetValue(value);
     }
 
     public void Click()

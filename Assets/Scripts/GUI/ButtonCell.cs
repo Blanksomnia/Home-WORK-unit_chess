@@ -7,14 +7,8 @@ using UnityEngine;
 
 public class ButtonCell : MonoBehaviour
 {
-    [SerializeField] CellUnit cell;
     [SerializeField] TextMeshProUGUI value;
-
-    private void Start()
-    {
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ConvertToName(cell._type);
-        GetValue();
-    }
+    [SerializeField] TextMeshProUGUI nameCell;
 
     private string ConvertToName(TypeUnits type)
     {
@@ -28,7 +22,7 @@ public class ButtonCell : MonoBehaviour
     }
 
 
-    public void GetValue() { value.text = cell._value.ToString(); }
-
+    public void GetValue(int val) { value.text = val.ToString(); }
+    public void GetName(TypeUnits name) { nameCell.text = ConvertToName(name); }
 
 }

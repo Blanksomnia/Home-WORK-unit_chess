@@ -10,6 +10,11 @@ public class MaterialsManager : MonoBehaviour
     public List<MaterialMine> _materials => materials;
 
 
+    private void Awake()
+    {
+        mat.UpdMaterlials(this);
+    }
+
     public MaterialMine material(TypeMine type)
     {
         MaterialMine mat = null;
@@ -69,7 +74,7 @@ public class MaterialsManager : MonoBehaviour
                 materials[i].Add(value);
             }
         }
-        mat.UpdMaterlials();
+        mat.UpdMaterlials(this);
     }
 
     public void RemoveValue(TypeMine type, int value)
@@ -82,7 +87,7 @@ public class MaterialsManager : MonoBehaviour
 
             }
         }
-        mat.UpdMaterlials();
+        mat.UpdMaterlials(this);
     }
 
 }

@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class ProductGUI : MonoBehaviour
 {
-    TextMeshProUGUI Cost;
-    [SerializeField] Product product;
+    [SerializeField] TextMeshProUGUI cost;
+    [SerializeField] TextMeshProUGUI name;
 
-    private void Awake()
+    public void GetName(TypeUnits type)
     {
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ConvertToName(product._cell._type);
-        Cost = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        Cost.text = ConvertCostToString(product._cost);
+        name.text = ConvertToName(type);
+    }
+
+    public void GetCost(List<MaterialMine> mines)
+    {
+        cost.text = ConvertCostToString(mines);
     }
 
     private string ConvertCostToString(List<MaterialMine> mines)

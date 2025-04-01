@@ -7,15 +7,21 @@ using Zenject;
 public class Product : MonoBehaviour
 {
     [SerializeField] CellUnit cell;
+    [SerializeField] ProductGUI gui;
     public CellUnit _cell => cell;
     [SerializeField] List<MaterialMine> cost;
-    public List<MaterialMine> _cost => cost;
     MaterialsManager materials;
 
     [Inject]
     public void Construct(MaterialsManager manMat)
     {
         materials = manMat;
+    }
+
+    private void Awake()
+    {
+        gui.GetName(cell._type);
+        gui.GetCost(cost);
     }
 
     private bool Check()

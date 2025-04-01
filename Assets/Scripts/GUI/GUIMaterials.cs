@@ -6,19 +6,11 @@ using Zenject;
 
 public class GUIMaterials : MonoBehaviour
 {
-    MaterialsManager mat;
     [SerializeField] private TextMeshProUGUI valueS;
     [SerializeField] private TextMeshProUGUI valueC;
     [SerializeField] private TextMeshProUGUI valueG;
 
-    [Inject]
-    public void Construct(MaterialsManager mater)
-    {
-        mat = mater;
-        UpdMaterlials();
-    }
-
-    public void UpdMaterlials()
+    public void UpdMaterlials(MaterialsManager mat)
     {
         valueS.text = mat.material(TypeMine.Stone)._value.ToString();
         valueC.text = mat.material(TypeMine.Coal)._value.ToString();
