@@ -10,7 +10,7 @@ using static UnityEditor.PlayerSettings;
 
 public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 {
-    private ManagerUnits mover;
+    private IListUnits mover;
     private MaterialsManager resources;
     private MaterialMine material;
     WaitForSeconds wait = new WaitForSeconds(1);
@@ -61,7 +61,7 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         anim = GetComponent<ICharacterAnimatorListener>();
     }
 
-    public void GetManager(ManagerUnits manage) => mover = manage;
+    public void GetManager(IListUnits manage) => mover = manage;
 
     private void ChangeMat(Material mat)
     {
@@ -185,11 +185,12 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         }
         else
         {
-            for (int i = 0; i < mover._activities[mover.ID(character._type)].Count; i++)
+            for (int i = 0; i < mover._activities()[0].Count; i++)
             {
-                if (mover._activities[mover.ID(character._type)][i]._onPoint() == true && mover._activities[mover.ID(character._type)][i]._pos() == pos)
+
+                if (mover._activities()[0][i]._onPoint() == true && mover._activities()[0][i]._pos() == pos)
                 {
-                    if (Vector3.Distance(character.transform.position, mover._activities[mover.ID(character._type)][i]._transform().position) <= maxDistanceToUnit)
+                    if (Vector3.Distance(character.transform.position, mover._activities()[0][i]._transform().position) <= maxDistanceToUnit)
                     {
                         onPoint = true;
                         Stay();
@@ -261,12 +262,11 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     {
         yield return wait;
         timerDead += 1;
-        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { mover.KillUnit(this); } }
+        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; DeadUnit(); }
     }
 
     private void StartDead()
     {
-        state = StateUnit.Dead;
         anim.StartDeathAnim();
         StartCoroutine(TimerDead());
     }

@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 {
 
-    private ManagerUnits mover;
+    private IListUnits mover;
     [SerializeField] Attacker attacker;
     WaitForSeconds wait = new WaitForSeconds(1);
     float timerDuration = 0;
@@ -59,7 +59,7 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         obstacle = attacker.obstacle;
     }
 
-    public void GetManager(ManagerUnits manage) => mover = manage;
+    public void GetManager(IListUnits manage) => mover = manage;
 
 
     public void OnPointerEnter() { }
@@ -141,11 +141,11 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         }
         else
         {
-            for (int i = 0; i < mover._activities[mover.ID(character._type)].Count; i++)
+            for (int i = 0; i < mover._activities()[2].Count; i++)
             {
-                if (mover._activities[mover.ID(character._type)][i]._onPoint() == true)
+                if (mover._activities()[2][i]._onPoint() == true)
                 {
-                    if (Vector3.Distance(character.transform.position, mover._activities[mover.ID(character._type)][i]._transform().position) <= maxDistanceToUnit)
+                    if (Vector3.Distance(character.transform.position, mover._activities()[2][i]._transform().position) <= maxDistanceToUnit)
                     {
                         onPoint = true;
                         AngryToUnits();
@@ -200,7 +200,7 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     {
         yield return wait;
         timerDead += 1;
-        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { mover.KillUnit(this); } }
+        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0;  DeadUnit();  }
     }
 
     private void StartMoveToTarget()
@@ -284,14 +284,14 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
                 }
             }
 
-            for (int i = 0; i < mover._activities.Count; i++)
+            for (int i = 0; i < mover._activities().Count; i++)
             {
-                for (int j = 0; j < mover._activities[i].Count; j++)
+                for (int j = 0; j < mover._activities()[i].Count; j++)
                 {
-                    if (mover._activities[i][j]._transform() == nearbyChar)
+                    if (mover._activities()[i][j]._transform() == nearbyChar)
                     {
                         StartMoveToTarget();
-                        target = mover._activities[i][j];
+                        target = mover._activities()[i][j];
 
                     }
 
@@ -305,7 +305,6 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 
     private void StartDead()
     {
-        state = StateUnit.Dead;
         anim.StartDeathAnim();
         StartCoroutine(TimerDead());
     }

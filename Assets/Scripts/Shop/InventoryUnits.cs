@@ -31,7 +31,7 @@ public class InventoryUnits : MonoBehaviour, IInventoryUnits
         {
             if (baseForUnit._canCreateUnits)
             {
-                if (manageUnits._activities[manageUnits.ID(selected._type)].Count + value <= manageUnits._maxUnitsLimit)
+                if (manageUnits._activities()[manageUnits.ID(selected._type)].Count + value <= manageUnits._maxUnitsLimit)
                     if (CheckAddUnit(value))
                     {
                         manageUnits.addUnit(pos, selected._type);

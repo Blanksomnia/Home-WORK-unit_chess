@@ -98,21 +98,21 @@ public class InputPlayer : MonoBehaviour
         {
             IStateUnitBehaviour NearChar = null;
 
-            for (int i = 0; i < manager._activities.Count; i++)
+            for (int i = 0; i < manager._activities().Count; i++)
             {
                 if (i != 2)
                 {
-                    for (int j = 0; j < manager._activities[i].Count; j++)
+                    for (int j = 0; j < manager._activities()[i].Count; j++)
                     {
 
                         if(NearChar == null)
                         {
-                            NearChar = manager._activities[i][j];
+                            NearChar = manager._activities()[i][j];
                         }
 
-                        if (Vector3.Distance(NearChar._transform().position, pos) > Vector3.Distance(manager._activities[i][j]._transform().position, pos))
+                        if (Vector3.Distance(NearChar._transform().position, pos) > Vector3.Distance(manager._activities()[i][j]._transform().position, pos))
                         {
-                            NearChar = manager._activities[i][j];
+                            NearChar = manager._activities()[i][j];
                         }
                     }
                 }

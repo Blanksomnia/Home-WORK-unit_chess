@@ -10,7 +10,7 @@ using Zenject;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.UI.CanvasScaler;
 
-public class ManagerUnits : MonoBehaviour, IManageUnits
+public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
 {
 
     [SerializeField] Transform parentUnits;
@@ -31,7 +31,7 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
     MaterialsManager managerMat;
 
     [HideInInspector] public int _maxUnitsLimit => maxUnitsLimit;
-    [HideInInspector] public List<List<IStateUnitBehaviour>> _activities => units;
+    [HideInInspector] public List<List<IStateUnitBehaviour>> _activities() => units;
     [HideInInspector] public List<IStateUnitBehaviour> _selected => selected;
 
     CreateBase baseForUnit;
@@ -65,7 +65,9 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
 
         for (int i = 0; i < count; i++)
         {
-            IStateUnitBehaviour en = Instantiate(unit, parentUnits).GetComponent<IStateUnitBehaviour>();
+            GameObject un = Instantiate(unit, parentUnits);
+            un.gameObject.SetActive(false);
+            IStateUnitBehaviour en = un.GetComponent<IStateUnitBehaviour>();
             en.GetManager(this);
             AddExUnit(en);
         }
@@ -92,11 +94,11 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
         if(selected.Count > 0)
         {
 
-            for (int i = 0; i < _activities[ID(selected[0]._type())].Count; i++)
+            for (int i = 0; i < units[ID(selected[0]._type())].Count; i++)
             {
-                if (_activities[ID(selected[0]._type())][i]._type() == selected[0]._type() && selected[0] != _activities[ID(selected[0]._type())][i])
+                if (units[ID(selected[0]._type())][i]._type() == selected[0]._type() && selected[0] != units[ID(selected[0]._type())][i])
                 {
-                    SelectUnit(_activities[ID(selected[0]._type())][i]);
+                    SelectUnit(units[ID(selected[0]._type())][i]);
                 }
             }
         }
@@ -135,7 +137,6 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
 
     private void AddExUnit(IStateUnitBehaviour unit)
     {
-        unit.IsDead();
         CheckType(unit._type());
         unit._transform().position = Vector3.zero;
         exUnits[ID(unit._type())].Add(unit);
@@ -171,6 +172,7 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
 
         if(IDun != units[ID(f)].Count + 5)
         {
+            unit.IsDead();
             AddExUnit(units[ID(f)][IDun]);
             units[ID(f)].RemoveAt(IDun);
             Debug.Log("Unit Deleted!!!");
@@ -299,11 +301,18 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
 
     private void Update()
     {
-        for (int i = 0; i < _activities.Count; i++)
+        for (int i = 0; i < units.Count; i++)
         {
-            for (int j = 0; j < _activities[i].Count; j++)
+            for (int j = 0; j < units[i].Count; j++)
             {
-                _activities[i][j].StateUpdate();
+                if(units[i][j]._state() == StateUnit.Dead)
+                {
+                    KillUnit(units[i][j]);
+                }
+                else
+                {
+                    units[i][j].StateUpdate();
+                }
             }
         }
 

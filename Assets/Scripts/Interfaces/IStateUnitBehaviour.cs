@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IStateUnitBehaviour
 {
-    public void GetManager(ManagerUnits manage);
+    public void GetManager(IListUnits units);
 
     public StateUnit _state();
     public bool _onPoint();

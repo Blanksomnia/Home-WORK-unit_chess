@@ -13,7 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 {
-    private ManagerUnits mover;
+    private IListUnits mover;
     [SerializeField] Attacker attacker;
     WaitForSeconds wait = new WaitForSeconds(1);
     float timerDuration = 0;
@@ -46,7 +46,7 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     private bool canAttack = true;
     public Transform _transform() => transform;
     public TypeUnits _type() => character._type;
-    public void GetDamage(int damage) { character.GetDamage(damage); if (character._health <= 0) {  StartDead(); } }
+    public void GetDamage(int damage) { character.GetDamage(damage); if (character._health <= 0) { StartDead(); } }
     public StateUnit _state() => state;
     public bool _onPoint() => onPoint;
     public Vector3 _pos() => pos;
@@ -74,7 +74,7 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         obstacle = attacker.obstacle;
     }
 
-    public void GetManager(ManagerUnits manage) => mover = manage;
+    public void GetManager(IListUnits manage) => mover = manage;
 
     private void ChangeMat(Material mat)
     {
@@ -160,7 +160,6 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     public void AngryToUnits() => StartAngry();
     public void IsDead() => DeadUnit();
 
-
     private void MoveUnit()
     {
         Move();
@@ -177,11 +176,11 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         }
         else
         {
-            for (int i = 0; i < mover._activities[mover.ID(character._type)].Count; i++)
+            for (int i = 0; i < mover._activities()[1].Count; i++)
             {
-                if (mover._activities[mover.ID(character._type)][i]._onPoint() == true && mover._activities[mover.ID(character._type)][i]._pos() == pos)
+                if (mover._activities()[1][i]._onPoint() == true && mover._activities()[1][i]._pos() == pos)
                 {
-                    if (Vector3.Distance(character.transform.position, mover._activities[mover.ID(character._type)][i]._transform().position) <= maxDistanceToUnit)
+                    if (Vector3.Distance(character.transform.position, mover._activities()[1][i]._transform().position) <= maxDistanceToUnit)
                     {
                         onPoint = true;
                         Stay();
@@ -234,7 +233,7 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     {
         yield return wait;
         timerDead += 2;
-        if (timerDead <= 3) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { mover.KillUnit(this); } }
+        if (timerDead <= 3) { StartCoroutine(TimerDead()); } else { timerDead = 0; DeadUnit(); }
     }
 
     private void StartMoveToTarget()
@@ -305,14 +304,14 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
                     }
             }
 
-            for (int i = 0; i < mover._activities.Count; i++)
+            for (int i = 0; i < mover._activities().Count; i++)
             {
-                for (int j = 0; j < mover._activities[i].Count; j++)
+                for (int j = 0; j < mover._activities()[i].Count; j++)
                 {
-                    if (mover._activities[i][j]._transform() == nearbyChar )
+                    if (mover._activities()[i][j]._transform() == nearbyChar )
                     {
                         StartMoveToTarget();
-                        target = mover._activities[i][j];
+                        target = mover._activities()[i][j];
 
                     }
 
@@ -326,7 +325,6 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 
     private void StartDead()
     {
-        state = StateUnit.Dead;
         anim.StartDeathAnim();
         StartCoroutine(TimerDead());
     }
