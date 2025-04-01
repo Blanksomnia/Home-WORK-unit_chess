@@ -261,7 +261,7 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     {
         yield return wait;
         timerDead += 1;
-        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { DeadUnit(); } }
+        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { mover.KillUnit(this); } }
     }
 
     private void StartDead()
@@ -274,7 +274,6 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     private void DeadUnit()
     {
         DeleteResource();
-        mover.KillUnit(this);
         state = StateUnit.Dead;
         gameObject.SetActive(false);
     }

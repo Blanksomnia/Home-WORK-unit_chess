@@ -608,6 +608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328548350}
+  - component: {fileID: 328548351}
   m_Layer: 5
   m_Name: WorkerBuy
   m_TagString: Untagged
@@ -637,6 +638,19 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -226.38165}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &328548351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328548349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9af7e4f566220e48a30bd645ef73d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  product: {fileID: 1451759209}
 --- !u!1 &348665654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,7 +1744,6 @@ MonoBehaviour:
   cameraMove: {fileID: 603606374}
   camera: {fileID: 963194227}
   spawner: {fileID: 1280860686}
-  materialUnit: {fileID: 11400000, guid: dadc8a0a5e6ebc24e91c7de6508659c6, type: 2}
   inputPlayer: {fileID: 603606375}
   build: {fileID: 1650790156}
 --- !u!114 &603606374

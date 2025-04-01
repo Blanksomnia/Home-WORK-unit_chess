@@ -135,11 +135,7 @@ public class ManagerUnits : MonoBehaviour, IManageUnits
 
     private void AddExUnit(IStateUnitBehaviour unit)
     {
-        if(unit._state() != StateUnit.Dead)
-        {
-            unit.IsDead();
-        }
-
+        unit.IsDead();
         CheckType(unit._type());
         unit._transform().position = Vector3.zero;
         exUnits[ID(unit._type())].Add(unit);

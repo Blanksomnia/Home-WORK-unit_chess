@@ -200,7 +200,7 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     {
         yield return wait;
         timerDead += 1;
-        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { DeadUnit(); } }
+        if (timerDead <= 2) { StartCoroutine(TimerDead()); } else { timerDead = 0; if (state == StateUnit.Dead) { mover.KillUnit(this); } }
     }
 
     private void StartMoveToTarget()
@@ -313,7 +313,6 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     private void DeadUnit()
     {
         state = StateUnit.Dead;
-        mover.KillUnit(this);
         gameObject.SetActive(false);
     }
 }
