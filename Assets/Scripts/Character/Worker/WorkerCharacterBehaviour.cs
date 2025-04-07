@@ -163,7 +163,6 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     public void Stay() => StayUnit();
     public void Move(Vector3 posit) => StartMove(posit);
     public void CollectResources(MinePoint pointP, Transform posBase, MaterialsManager material) => StartCollect(pointP, posBase, material);
-    public void AngryToUnits() => Stay();
     public void IsDead() => DeadUnit();
 
     private void StayUnit()
@@ -192,6 +191,7 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
                 {
                     if (Vector3.Distance(character.transform.position, mover._activities()[0][i]._transform().position) <= maxDistanceToUnit)
                     {
+
                         onPoint = true;
                         Stay();
                     }

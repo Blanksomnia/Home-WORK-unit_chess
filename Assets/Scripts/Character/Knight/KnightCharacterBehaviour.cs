@@ -156,9 +156,11 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 
     public void Stay() => StartAngry();
     public void Move(Vector3 posit) => StartMove(posit);
-    public void CollectResources(MinePoint mineP, Transform posBase, MaterialsManager material) => StartAngry();
-    public void AngryToUnits() => StartAngry();
+    public void CollectResources(MinePoint mineP, Transform posBase, MaterialsManager material) => Empty();
     public void IsDead() => DeadUnit();
+
+
+    private void Empty() { }
 
     private void MoveUnit()
     {
