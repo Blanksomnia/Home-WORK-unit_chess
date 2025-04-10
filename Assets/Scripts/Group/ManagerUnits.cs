@@ -16,9 +16,7 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
     [SerializeField] Transform parentUnits;
     [SerializeField] Transform parentMines;
     public LayerMask ground;
-    public LayerMask point;
     public LayerMask obsticalGround;
-    public LayerMask obsticalPoint;
 
     ListUnitSpawner unitSpawner;
     List<MinePoint> mines = new List<MinePoint>();
@@ -28,20 +26,28 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
     int maxUnitsLimit = 25;
 
     Camera camera;
+
     MaterialsManager managerMat;
 
-    [HideInInspector] public int _maxUnitsLimit => maxUnitsLimit;
-    [HideInInspector] public List<List<IStateUnitBehaviour>> _activities() => units;
-    [HideInInspector] public List<IStateUnitBehaviour> _selected => selected;
+    private CreateBuild selectedBuild = null;
+    private Transform posBase;
+    List<Transform> patrols = new List<Transform>();
 
-    CreateBase baseForUnit;
+    public int _maxUnitsLimit => maxUnitsLimit;
+
+    public List<List<IStateUnitBehaviour>> _activities() => units;
+    public List<MinePoint> _minePoints() => mines;
+    public Transform _posBase() => posBase;
+    public MaterialsManager _materials() => managerMat;
+    public List<Transform> _patrols() => patrols;
+    public List<IStateUnitBehaviour> _selected => selected;
+
 
     [Inject]
-    public void Construct(Camera CAM, ListUnitSpawner list, CreateBase baseB, MaterialsManager manager)
+    public void Construct(Camera CAM, ListUnitSpawner list, MaterialsManager manager)
     {
         camera = CAM;
         unitSpawner = list;
-        baseForUnit = baseB;
         managerMat = manager;
     }
 
@@ -57,6 +63,52 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
     {
         CreateUnit(TypeUnits.Worker, maxUnitsLimit);
         CreateUnit(TypeUnits.Knight, maxUnitsLimit);
+    }
+
+
+    public void KillSelectBuild()
+    {
+        selectedBuild = null;
+    }
+
+    public void SelectBuild(CreateBuild f)
+    {
+        if (selectedBuild != null)
+        {
+            selectedBuild.UnSelect();
+        }
+
+
+        selectedBuild = f;
+    }
+
+    public void CreateBuild(Vector3 pos)
+    {
+        if(selectedBuild != null)
+        {
+            if (posBase == null)
+            {
+                if (selectedBuild.nameBuild == "Base")
+                {
+                    selectedBuild.addBuild(pos);
+                }
+            }
+            else
+            {
+                selectedBuild.addBuild(pos);
+            }
+        }
+
+    }
+
+    public void GetPatrol(Transform patrol)
+    {
+        patrols.Add(patrol);
+    }
+
+    public void GetBase(Transform build)
+    {
+        posBase = build;
     }
 
     public void CreateUnit(TypeUnits _type, int count)
@@ -91,15 +143,26 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
 
     public void SelectGroup()
     {
-        if(selected.Count > 0)
+        TypeUnits type = selected[0]._type();
+        CheckType(type);
+        selectedBuild = null;
+        if (selected.Count > 0)
         {
 
-            for (int i = 0; i < units[ID(selected[0]._type())].Count; i++)
+            if (selected[0]._type() != type)
             {
-                if (units[ID(selected[0]._type())][i]._type() == selected[0]._type() && selected[0] != units[ID(selected[0]._type())][i])
-                {
-                    SelectUnit(units[ID(selected[0]._type())][i]);
-                }
+                ClearSelected();
+            }
+            for (int i = 0; i < units[ID(type)].Count; i++)
+            {
+                SelectUnit(units[ID(type)][i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < units[ID(type)].Count; i++)
+            {
+                SelectUnit(units[ID(type)][i]);
             }
         }
 
@@ -109,15 +172,11 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
     {
         CheckType(unit._type());
 
-            if(selected.Count > 0)
-            {
-                if (unit._type() != selected[0]._type())
-                {
-                    ClearSelected();
-                }
-            }
-            selected.Add(unit);
-            unit.Select();
+        selectedBuild = null;
+
+        selected.Add(unit);
+        unit.Select();
+
     }
 
     public void ClearSelected()
@@ -214,38 +273,6 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
         return Convert.ToInt32(type);
     }
 
-
-    private void MoveToPointMine(MinePoint mine)
-    {
-        for (int i = 0; i < selected.Count; i++)
-        {
-            if (selected[i]._type() == TypeUnits.Worker)
-            {
-                selected[i].CollectResources(mine, baseForUnit._baseBuild, managerMat);
-            }
-        }
-    }
-
-    private void PointMine(Vector3 pos)
-    {
-        if(mines.Count > 0)
-        {
-            MinePoint mine = mines[0];
-            for (int i = 0; i < mines.Count; i++)
-            {
-                float distCorrect = Vector3.Distance(mines[i].transform.position, pos);
-                float distNearby = Vector3.Distance(mine.transform.position, pos);
-                
-                if(distCorrect < distNearby)
-                {
-                    mine = mines[i];
-                }
-            }
-            MoveToPointMine(mine);
-        }
-       
-    }
-
     private void UnitsMove(Vector3 vec)
     {
         for (int i = 0; i < selected.Count; i++)
@@ -259,20 +286,12 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
 
         if (selected.Count > 0)
         {
-            Vector3 vec = MousePoint(point, obsticalPoint);
+            Vector3 vec = MousePoint(ground, obsticalGround);
 
+            vec = MousePoint(ground, obsticalGround);
             if (vec != Vector3.zero)
             {
-                PointMine(vec);
-            }
-            else
-            {
-
-                vec = MousePoint(ground, obsticalGround);
-                if (vec != Vector3.zero)
-                {
-                    UnitsMove(vec);
-                }
+                UnitsMove(vec);
             }
 
         }
@@ -283,7 +302,6 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
     {
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
 
         if (!Physics.Raycast(ray, out hit, 250, obst))
         {
@@ -314,6 +332,11 @@ public class ManagerUnits : MonoBehaviour, IManageUnits, IListUnits
                     units[i][j].StateUpdate();
                 }
             }
+        }
+
+        if (selectedBuild != null)
+        {
+            selectedBuild.Selected(MousePoint(ground, obsticalGround));
         }
 
     }

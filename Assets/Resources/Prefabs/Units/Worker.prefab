@@ -789,6 +789,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arms: {fileID: 5514052248278713078}
   mat: {fileID: 11400000, guid: dadc8a0a5e6ebc24e91c7de6508659c6, type: 2}
+  points:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &6009739376429867995
 MonoBehaviour:
   m_ObjectHideFlags: 0

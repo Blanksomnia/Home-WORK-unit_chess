@@ -63,8 +63,7 @@ public class Product : MonoBehaviour
             {
                 for (int j = 0; j < cost.Count; ++j)
                 {
-                    materials._materials[i].Remove(cost[j]._value);
-                    
+                    materials.RemoveValue(cost[j]._type, cost[j]._value);
                 }
             }
             cell.AddValue(1);

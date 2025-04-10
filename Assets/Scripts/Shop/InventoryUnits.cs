@@ -10,13 +10,11 @@ public class InventoryUnits : MonoBehaviour, IInventoryUnits
 {
     ManagerUnits manageUnits;
     CellUnit selected = null;
-    CreateBase baseForUnit;
 
     [Inject]
-    public void Construct(ManagerUnits manage, CreateBase BASE)
+    public void Construct(ManagerUnits manage)
     {
         manageUnits = manage;
-        baseForUnit = BASE;
     }
 
     public void GetSelect(CellUnit s)
@@ -24,23 +22,29 @@ public class InventoryUnits : MonoBehaviour, IInventoryUnits
         selected = s;
     }
 
-    public void AddUnit(int value)
+    public void AddSelected(int value)
     {
         Vector3 pos = manageUnits.MousePoint(manageUnits.ground, manageUnits.obsticalGround);
         if(pos != Vector3.zero)
         {
-            if (baseForUnit._canCreateUnits)
+            if (manageUnits._posBase() != null)
             {
-                if (manageUnits._activities()[manageUnits.ID(selected._type)].Count + value <= manageUnits._maxUnitsLimit)
-                    if (CheckAddUnit(value))
-                    {
-                        manageUnits.addUnit(pos, selected._type);
-                        selected.RemoveValue(value);
-                    }
+                manageUnits.CreateBuild(pos);
+
+                if(manageUnits._activities().Count > 0 && selected != null)
+                {
+                    if (manageUnits._activities()[manageUnits.ID(selected._type)].Count + value <= manageUnits._maxUnitsLimit)
+                        if (CheckAddUnit(value))
+                        {
+                            manageUnits.addUnit(pos, selected._type);
+                            selected.RemoveValue(value);
+                        }
+                }
+
             }
             else
             {
-                baseForUnit.addBuild(pos);
+                manageUnits.CreateBuild(pos);
             }
         }
         else { Debug.Log("you need create on ground!!!"); }

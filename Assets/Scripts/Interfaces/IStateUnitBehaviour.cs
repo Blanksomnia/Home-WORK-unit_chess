@@ -24,7 +24,5 @@ public interface IStateUnitBehaviour
     public void WakeUp();
     public void Stay();
     public void Move(Vector3 posit);
-    public void CollectResources(MinePoint mineP, Transform posBase, MaterialsManager material);
-
     public void IsDead();
 }

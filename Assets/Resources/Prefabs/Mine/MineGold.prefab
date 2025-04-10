@@ -1050,7 +1050,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1383256850605545204}
-  - component: {fileID: 7675526784057233679}
   m_Layer: 3
   m_Name: PointMine (1)
   m_TagString: Untagged
@@ -1073,24 +1072,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5720163752415969854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7675526784057233679
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7884470468950475223}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 9.376717, y: 5.023758, z: 7.2169666}
-  m_Center: {x: -0.062095642, y: 2.011879, z: -0.5401068}

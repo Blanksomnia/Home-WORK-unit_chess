@@ -11,7 +11,6 @@ using static UnityEditor.PlayerSettings;
 public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 {
     private IListUnits mover;
-    private MaterialsManager resources;
     private MaterialMine material;
     WaitForSeconds wait = new WaitForSeconds(1);
 
@@ -26,10 +25,10 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     float maxDistanceToUnit = 1.5f;
     bool onPoint = false;
     Vector3 pos = new Vector3();
-    Transform posBase;
     private StateUnit state;
     float timerDead = 0;
     [SerializeField] MaterialUnit mat;
+    [SerializeField] LayerMask points;
     Material enter;
     Material select;
     Material exit;
@@ -112,31 +111,48 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         navMeshAgent.speed = character._speed;
         pos = posit;
         anim.move();
-        if (withResource)
+
+        Collider[] colP = Physics.OverlapSphere(posit, 3, points);
+        if (colP.Length > 0)
         {
-            CollectResources(point, posBase, resources);
+            print(colP[0]);
+            for (int j = 0; j < colP.Length; j++)
+            {
+                for (int i = 0; i < mover._minePoints().Count; i++)
+                {
+                    if (colP[j].transform == mover._minePoints()[i].transform)
+                    {
+                        StartCollect(mover._minePoints()[i]);
+                    }
+                }
+            }
         }
         else
         {
-            onPoint = false;
-            navMeshAgent.SetDestination(pos);
-            state = StateUnit.Move;
+            if (withResource)
+            {
+                StartCollect(point);
+            }
+            else
+            {
+                onPoint = false;
+                navMeshAgent.SetDestination(pos);
+                state = StateUnit.Move;
+            }
         }
 
     }
 
-    private void StartCollect(MinePoint mineP, Transform posB, MaterialsManager material)
+    private void StartCollect(MinePoint mineP)
     {
         navMeshAgent.speed = character._speed;
         anim.move();
         state = StateUnit.CollectResources;
         point = mineP;
-        posBase = posB;
-        resources = material;
-        this.material = resources.material(mineP.type);
+        material = mover._materials().material(mineP.type);
         if (withResource)
         {
-            navMeshAgent.SetDestination(posBase.position);
+            navMeshAgent.SetDestination(mover._posBase().position);
         }
         else
         {
@@ -144,7 +160,39 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 
         }
     }
-    
+
+    private void Collect()
+    {
+        if (material._value <= material._limit + resourceCount)
+        {
+            if (withResource)
+            {
+                if (CheckPos(mover._posBase().position))
+                {
+                    anim.move();
+                    navMeshAgent.SetDestination(point.transform.position);
+                    mover._materials().AddValue(point.type, resourceCount);
+                    DeleteResource();
+                    withResource = false;
+                }
+            }
+            else
+            {
+
+                if (CheckPos(point.transform.position))
+                {
+                    anim.collect();
+                    navMeshAgent.SetDestination(mover._posBase().position);
+                    AddResource();
+                    withResource = true;
+                }
+            }
+        }
+        else
+        { Stay(); }
+
+    }
+
     public void StateUpdate()
     {
 
@@ -160,9 +208,9 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     }
 
 
+
     public void Stay() => StayUnit();
     public void Move(Vector3 posit) => StartMove(posit);
-    public void CollectResources(MinePoint pointP, Transform posBase, MaterialsManager material) => StartCollect(pointP, posBase, material);
     public void IsDead() => DeadUnit();
 
     private void StayUnit()
@@ -200,39 +248,6 @@ public class WorkerCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
             }
         }
 
-    }
-
-
-    private void Collect()
-    {
-        if (material._value <= material._limit + resourceCount)
-        {
-            if (withResource)
-            {
-                
-                if (CheckPos(posBase.position))
-                {
-                    anim.move();
-                    navMeshAgent.SetDestination(point.transform.position);
-                    resources.AddValue(point.type, resourceCount);
-                    DeleteResource();
-                    withResource = false;
-                }
-            }
-            else
-            {
-                if (CheckPos(point.transform.position))
-                {
-                    anim.collect();
-                    navMeshAgent.SetDestination(posBase.position);
-                    AddResource();
-                    withResource = true;
-                }
-            }
-        }
-        else 
-        { Stay(); }
-        
     }
 
 

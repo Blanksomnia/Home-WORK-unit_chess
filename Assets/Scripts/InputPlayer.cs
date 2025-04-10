@@ -10,6 +10,7 @@ using Zenject;
 public class InputPlayer : MonoBehaviour
 {
     [SerializeField] LayerMask player;
+    [SerializeField] GameObject panel;
     LayerMask empty;
 
     InventoryUnits inventory;
@@ -17,13 +18,10 @@ public class InputPlayer : MonoBehaviour
     InputActionAsset input;
 
     InputAction selectUnit;
-    InputAction selectClear;
-    InputAction selectUnitGroup;
-    InputAction moveTo;
-    InputAction deleteUnit;
-    InputAction addUnit;
+    InputAction moveUnits;
 
-    IStateUnitBehaviour character;
+
+    IStateUnitBehaviour character = null;
 
     [Inject]
     public void Construct(InputActionAsset inputs, InventoryUnits invent, ManagerUnits manage)
@@ -35,63 +33,84 @@ public class InputPlayer : MonoBehaviour
 
     private void Awake()
     {
+        panel.gameObject.SetActive(false);
+
         string map = "ManageUnits";
         selectUnit = input.FindActionMap(map).FindAction("SelectUnit");
-        selectUnitGroup = input.FindActionMap(map).FindAction("SelectGroupUnits");
-        moveTo = input.FindActionMap(map).FindAction("MoveTo");
-        deleteUnit = input.FindActionMap(map).FindAction("DeleteUnit");
-        addUnit = input.FindActionMap(map).FindAction("AddUnit");
-        selectClear = input.FindActionMap(map).FindAction("ClearSelected");
+        moveUnits = input.FindActionMap(map).FindAction("MoveUnits");
+
         selectUnit.Enable();
-        selectUnitGroup.Enable();
-        moveTo.Enable();
-        deleteUnit.Enable();
-        addUnit.Enable();
-        selectClear.Enable();
+        moveUnits.Enable();
+
     }
 
     private void Update()
     {
-        if(selectUnit.WasPressedThisFrame())
+        MouseOnPlayer();
+
+        if (moveUnits.WasPressedThisFrame())
         {
             if(character != null)
             {
-                manager.SelectUnit(character);
+
+            }
+            else
+            {
+                manager.UnitMoveTo();
             }
         }
 
-        if (selectUnitGroup.WasPressedThisFrame())
+        if(selectUnit.WasPressedThisFrame())
         {
-            manager.SelectGroup();
+            if(character == null)
+            {
+                inventory.AddSelected(1);
+
+            }
+            else
+            {
+                manager.SelectUnit(character);
+                CheckUnits();
+
+            }
+
         }
 
-        if(moveTo.WasPressedThisFrame())
+    }
+
+    private void CheckUnits()
+    {
+        if(manager._selected.Count > 0)
         {
-            manager.UnitMoveTo();
+            panel.gameObject.SetActive(true);
         }
-
-        if (addUnit.WasPressedThisFrame())
+        else
         {
-            inventory.AddUnit(1);
+            panel.gameObject.SetActive(false);
         }
+    }
 
-        if (deleteUnit.WasPressedThisFrame())
-        {
-            inventory.DeleteUnit();
-        }
+    public void SelectGroupButtom()
+    {
+        manager.SelectGroup();
+        panel.gameObject.SetActive(false);
+    }
 
-        if (selectClear.WasPressedThisFrame())
-        {
-            manager.ClearSelected();
-        }
+    public void DeleteSelectsButtom()
+    {
+        inventory.DeleteUnit();
+        panel.gameObject.SetActive(false);
+    }
 
-        MouseOnPlayer();
-        
-
+    public void ClearSelectsButtom()
+    {
+        manager.ClearSelected();
+        panel.gameObject.SetActive(false);
     }
 
     private void MouseOnPlayer()
     {
+
         Vector3 pos = manager.MousePoint(player, empty);
 
         if(pos != Vector3.zero)

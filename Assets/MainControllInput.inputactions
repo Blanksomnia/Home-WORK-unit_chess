@@ -112,7 +112,7 @@
                 {
                     "name": "",
                     "id": "1ef0bb01-93bc-4c53-ad9b-84c79f1063a8",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
@@ -169,45 +169,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SelectGroupUnits",
+                    "name": "MoveUnits",
                     "type": "Button",
-                    "id": "a07b0917-1cdf-42b7-b0f9-cea1ee474be8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveTo",
-                    "type": "Button",
-                    "id": "72cbe899-64e8-48ab-8a34-3e09d1a9f124",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DeleteUnit",
-                    "type": "Button",
-                    "id": "f4e1def7-9ec7-45fb-8311-8790c3c4475f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "AddUnit",
-                    "type": "Button",
-                    "id": "848f5d29-79fd-4631-a965-81df3769a780",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ClearSelected",
-                    "type": "Button",
-                    "id": "f2b68d4e-efe4-4dcc-aa08-8b49b865d380",
+                    "id": "746c6813-f782-4d9c-9409-b52d1f72eea9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -217,19 +181,8 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "ed44abdc-cd73-4d7f-8a3c-f2efaff722de",
-                    "path": "<Keyboard>/s",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SelectGroupUnits",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c0adc27f-cbec-4d65-a289-2485f0080a97",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -239,45 +192,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9a202045-7e51-4f49-be85-29beab2c92d8",
-                    "path": "<Keyboard>/w",
+                    "id": "ca2fed2d-74be-476f-ba9b-2ae6a2f54ba8",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveTo",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c5f61a86-e86c-42aa-9acd-b443d78607e7",
-                    "path": "<Keyboard>/q",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DeleteUnit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bdf39e3a-36f8-48a1-9ee4-2d58a6a867db",
-                    "path": "<Keyboard>/e",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AddUnit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "729a7c67-6dc4-4cb7-8705-7f0b9149d454",
-                    "path": "<Keyboard>/d",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ClearSelected",
+                    "action": "MoveUnits",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

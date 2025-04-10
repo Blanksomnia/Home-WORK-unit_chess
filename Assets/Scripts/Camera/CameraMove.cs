@@ -28,10 +28,6 @@ public class CameraMove : MonoBehaviour
     private float Xmin = 0;
     private float Xmax = 0;
 
-    private Vector3 toMove;
-    private Vector3 previousFrame;
-
-
     [Inject]
     public void Construct(InputActionAsset inputs, Camera cam)
     {
@@ -62,6 +58,7 @@ public class CameraMove : MonoBehaviour
     private void Update()
     {
         MoveCamera();
+       
     }
 
     private void MoveCamera()
@@ -69,18 +66,19 @@ public class CameraMove : MonoBehaviour
 
         if (press.IsPressed())
         {
-            toMove = camera.transform.position;
-            previousFrame = toMove;
+            Vector3 MOVE = Vector3.zero;
+            Vector3 toMove = camera.transform.position;
 
             toMove.x += -X.ReadValue<float>() * speedMoveHorizontal * Time.deltaTime;
             toMove.z += -Z.ReadValue<float>() * speedMoveHorizontal * Time.deltaTime;
             toMove.y += -Y.ReadValue<float>() * speedMoveVertical * Time.deltaTime;
 
-            if (toMove.x > Xmin && toMove.x < Xmax) { } else { toMove.x = previousFrame.x; }
-            if (toMove.z > Zmin && toMove.z < Zmax) { } else { toMove.z = previousFrame.z; }            
-            if (toMove.y > Ymin && toMove.y < Ymax) { } else { toMove.y = previousFrame.y; }
+            if (toMove.x > Xmin && toMove.x < Xmax) { MOVE.x += toMove.x - camera.transform.position.x; } else { }
+            if (toMove.z > Zmin && toMove.z < Zmax) { MOVE.z += toMove.z - camera.transform.position.z; } else { }            
+            if (toMove.y > Ymin && toMove.y < Ymax) { MOVE.y += toMove.y - camera.transform.position.y; } else { }
 
-            camera.transform.position = toMove;
+            camera.transform.position += MOVE;
+
         }
 
     }

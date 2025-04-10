@@ -51,6 +51,7 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     public bool _onPoint() => onPoint;
     public Vector3 _pos() => pos;
 
+
     private void Awake()
     {
         enter = mat.enter;
@@ -119,6 +120,40 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
         Stay();
     }
 
+
+    private void StartStay()
+    {
+        bool angry = false;
+        for (int i = 0; i < mover._patrols().Count; i++)
+        {
+            float dist = Vector3.Distance(_transform().position, mover._patrols()[i].position);
+            if (dist <= 10)
+            {
+                angry = true;
+            }
+        }
+
+        if (angry)
+        {
+            UnityEngine.Debug.Log("Unit is patroling");
+
+            StartAngry();
+        }
+        else
+        {
+            StayUnit();
+        }
+    }
+
+    private void StayUnit()
+    {
+        anim.stay();
+        state = StateUnit.Stay;
+        navMeshAgent.speed = 0;
+
+    }
+
+
     private void StartMove(Vector3 posit)
     {
         navMeshAgent.stoppingDistance = 0;
@@ -154,9 +189,8 @@ public class KnightCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
     }
 
 
-    public void Stay() => StartAngry();
+    public void Stay() => StartStay();
     public void Move(Vector3 posit) => StartMove(posit);
-    public void CollectResources(MinePoint mineP, Transform posBase, MaterialsManager material) => Empty();
     public void IsDead() => DeadUnit();
 
 

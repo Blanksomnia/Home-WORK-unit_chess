@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class CreateBase : CreateBuild
+public class CreatePatrol : CreateBuild
 {
     public override void successfullCreate()
     {
-        _manager.GetBase(_builds[0].transform);  
+        _manager.GetPatrol(_builds[0].transform);
     }
-
 }

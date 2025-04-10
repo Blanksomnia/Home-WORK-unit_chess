@@ -120,7 +120,6 @@ public class EnemyCharacterBehaviour : MonoBehaviour, IStateUnitBehaviour
 
     public void Stay() => StartAngry();
     public void Move(Vector3 posit) => StartMove(posit);
-    public void CollectResources(MinePoint mineP, Transform posBase, MaterialsManager material) => Empty();
     public void IsDead() => DeadUnit();
 
 
