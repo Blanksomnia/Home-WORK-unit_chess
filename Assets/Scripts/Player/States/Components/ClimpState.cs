@@ -52,25 +52,19 @@ public class ClimbState : Movement
             else if (LookAt(target) == LookAt(player.rb.transform.position + Vector3.right))
             {
                 player.LockJump = false;
+                turnToJumpAfterClimb = right * 0.2f;
                 if (CheckMoveRight())
                     current = right * move.x * 1;
-                else
-                {
-            
-                    turnToJumpAfterClimb = right * 0.2f;
-                    
-                }
+
 
             }
             else if (LookAt(target) == LookAt(player.rb.transform.position + Vector3.left))
             {
                 player.LockJump = false;
+                turnToJumpAfterClimb = left * 0.2f;
                 if (CheckMoveLeft())
                     current = left * -move.x * 1f;
-                else
-                {
-                    turnToJumpAfterClimb = left * 0.2f;
-                }
+
             }
             else if (LookAt(player.rb.transform.position + Vector3.back) == LookAt(target))
             {
@@ -88,7 +82,6 @@ public class ClimbState : Movement
             player.animations.IsClimbing(0);
         }
     }
-
 
     private bool CheckMoveRight()
     {

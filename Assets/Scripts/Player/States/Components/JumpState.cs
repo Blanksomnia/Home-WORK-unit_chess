@@ -36,7 +36,7 @@ public class JumpState : Movement
             player.animations.LookAt(player.rb.transform.position + new Vector3(player.turnToJumpAfterClimb.x, 0, player.turnToJumpAfterClimb.y), 360);
             current.x = player.turnToJumpAfterClimb.x;
             current.z = player.turnToJumpAfterClimb.y;
-
+            player.LockMove = true;
         }
 
 
