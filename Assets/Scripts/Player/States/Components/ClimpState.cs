@@ -88,6 +88,14 @@ public class ClimbState : Movement
         }
     }
 
+    public override void Exit()
+    {
+        if(!player.LockJump)
+        {
+            player.rb.isKinematic = false;
+        }
+    }
+
 
     private bool CheckMoveRight()
     {

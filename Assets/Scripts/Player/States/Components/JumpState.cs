@@ -14,12 +14,7 @@ public class JumpState : Movement
 
     public override void Enter()
     {
-    
-        if(player.canClimb)
-        {
-            player.rb.isKinematic = false;
-            player.LockMove = true;
-        }
+
         player.animations.StartJump();
         IsJumping(player.powerJump);
 
@@ -37,9 +32,13 @@ public class JumpState : Movement
         if(player.turnToJumpAfterClimb != Vector2.zero)
         player.animations.LookAt(player.rb.transform.position + new Vector3(player.turnToJumpAfterClimb.x, 0, player.turnToJumpAfterClimb.y), 360);
 
-        player.turnToJumpAfterClimb = Vector2.zero;
 
         player.rb.AddForce(current * player.rb.mass * 1000);
+    }
+
+    public override void Exit()
+    {
+        player.turnToJumpAfterClimb = Vector2.zero;
     }
 
 }
