@@ -192,14 +192,9 @@ public class Player : MonoBehaviour
     {
         if (!LockJump)
         {
-            if (!inAir && !canClimb)
-            {
+
                 mover.state = StatePlayer.Jump;
-            }
-            else if (canClimb)
-            {
-                mover.state = StatePlayer.Jump;
-            }
+
         }
 
     }
