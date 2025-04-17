@@ -33,12 +33,11 @@ public class AnimationPlayer
     public void Idle() { animator.Play(idle); }
     public void Move(float value) { animator.SetFloat(move, value); }
     public void StartJump() { animator.Play(jump); }
-    public void EndJump() { animator.StartRecording(frameJump); player.LockMove = false; }
+    public void EndJump() { animator.StartRecording(frameJump); }
 
     public void StartClimb()
     {
         animator.Play(startClimb);
-        player.rb.isKinematic = true;
     }
 
     public void IsClimbing(float value)
@@ -50,7 +49,6 @@ public class AnimationPlayer
     {
         animator.Play(endClimb);
         this.posPlayerClimb = posPlayerFinish;
-        //player.LockMove = true;
 
         animator.transform.position = posPlayerClimb;
         player.LockJump = false;
@@ -145,6 +143,8 @@ public class AnimationPlayer
     {
         animator.transform.position = posPlayerClimb;
         player.LockJump = false;
+        player.LockMove = false;
         player.rb.isKinematic = false;
+        player.turnToJumpAfterClimb = Vector2.zero;
     }
 }

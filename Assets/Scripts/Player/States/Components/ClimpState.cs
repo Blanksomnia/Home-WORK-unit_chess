@@ -22,6 +22,7 @@ public class ClimbState : Movement
     public override void Enter()
     {
         player.LockJump = true;
+        player.animations.IsClimbing(1);
     }
     public override void Update()
     {
@@ -45,7 +46,6 @@ public class ClimbState : Movement
 
             if (LookAt(Vector3.forward + player.rb.transform.position) == LookAt(target) && ClimbForward())
             {
-                player.LockJump = true;
                 Vector3 currentCenter = player.rb.transform.position + player.rb.transform.forward + new Vector3(0, 2f, 0);
                 player.animations.EndClimb(currentCenter);
             }
@@ -77,10 +77,7 @@ public class ClimbState : Movement
             player.rb.transform.position += current;
 
         }
-        else
-        {
-            player.animations.IsClimbing(0);
-        }
+
     }
 
     private bool CheckMoveRight()

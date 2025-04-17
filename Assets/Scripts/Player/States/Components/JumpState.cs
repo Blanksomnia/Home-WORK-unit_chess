@@ -19,7 +19,6 @@ public class JumpState : Movement
             player.rb.isKinematic = false;
         }
 
-        player.animations.StartJump();
         IsJumping(player.powerJump);
 
     }

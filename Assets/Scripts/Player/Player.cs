@@ -87,15 +87,17 @@ public class Player : MonoBehaviour
 
     private void AnimJump()
     {
-        if (_inAir == true) { animations.StartJump(); } else { animations.EndJump(); }
+        if (_inAir == true) { animations.StartJump(); } else { animations.EndJump(); LockMove = false; }
     }
     private void AnimClimb()
     {
         if (_canClimb == true)
         {
             Rotation();
+            rb.isKinematic = true;
             animations.StartClimb();
         }
+        else { }
 
     }
 
