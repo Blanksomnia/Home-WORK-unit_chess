@@ -1,32 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
 public class Player : MonoBehaviour
 {
     AnimationPlayer _animations;
-    HitBoxCharacter character;
+    HitBoxCharacter hitboxPlayer;
     MovementPlayer mover;
 
     bool _inAir = false;
     bool _canClimb = false;
-    public bool LockJump = false;
-    public bool LockMove = false;
+    [HideInInspector] public bool LockJump = false;
+    [HideInInspector] public bool LockMove = false;
     public float speedDefault = 2f;
     public float speedInAir = 0.001f;
+    public float speedClimb = 0.2f;
     public float powerJump;
-    public Vector2 turnMove;
-    public Vector2 turnToJumpAfterClimb;
+    [HideInInspector] public Vector2 turnMove;
+    [HideInInspector] public Vector2 turnToJumpAfterClimb;
 
 
     List<HitBoxCharacter> enemies = new List<HitBoxCharacter>();
-    public HitBoxCharacter enemy;
+    [HideInInspector] public HitBoxCharacter enemy;
 
     public LayerMask layerGround;
-    [SerializeField] LayerMask unit;
+    public LayerMask layerUnit;
     [SerializeField] Transform collectUnits;
     [SerializeField] int _damage;
 
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        character = GetComponent<HitBoxCharacter>();
+        hitboxPlayer = GetComponent<HitBoxCharacter>();
         _rb = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         foreach (HitBoxCharacter hit in collectUnits.GetComponentsInChildren<HitBoxCharacter>())
         {
 
-            if(character != hit)
+            if(hitboxPlayer != hit)
             enemies.Add(hit);
         }
 
@@ -77,17 +77,9 @@ public class Player : MonoBehaviour
 
     }
 
-
-    private void Update()
-    {
-        _animations.Update();
-        Checks();
-        mover.Update();
-    }
-
     private void AnimJump()
     {
-        if (_inAir == true) { animations.StartJump(); } else { animations.EndJump(); LockMove = false; }
+        if (_inAir == true) { animations.StartJump(); LockJump = true; } else { animations.EndJump(); LockMove = false; LockJump = false; }
     }
     private void AnimClimb()
     {
@@ -97,7 +89,10 @@ public class Player : MonoBehaviour
             rb.isKinematic = true;
             animations.StartClimb();
         }
-        else { }
+        else 
+        {
+
+        }
 
     }
 
@@ -131,7 +126,7 @@ public class Player : MonoBehaviour
 
     private void Checks()
     {
-        if (character._health == 0)
+        if (hitboxPlayer._health == 0)
         {
             mover.state = StatePlayer.Dead;
         }
@@ -148,28 +143,14 @@ public class Player : MonoBehaviour
             bool climb = CheckCanClimb();
 
             if (climb != _canClimb)
-            {
-                
+            {           
                 _canClimb = climb;
                 AnimClimb();
             }
 
-
             triggerCharacterEnter();
 
-            if (turnMove == Vector2.zero)
-            {
-                mover.state = StatePlayer.Idle;
-            }
-            else if (turnMove != Vector2.zero && !canClimb && !LockMove)
-            {
-                mover.state = StatePlayer.Movement;
-            }
-            else if (inAir && _canClimb && turnMove != Vector2.zero && !LockMove)
-            {
-                mover.state = StatePlayer.Climb;
-            }
-            else if (inAir && enemy != null && !canClimb)
+            if (inAir && enemy != null && !canClimb)
             {
                 mover.state = StatePlayer.AttackInAir;
             }
@@ -179,12 +160,29 @@ public class Player : MonoBehaviour
     }
 
 
-
+    private void UpdData()
+    {
+        _animations.Update();
+        Checks();
+        mover.Update();
+    }
 
     public void Move(Vector2 turn)
     {
-
+        UpdData();
         turnMove = turn;
+        if (turnMove == Vector2.zero)
+        {
+            mover.state = StatePlayer.Idle;
+        }
+        else if (!canClimb && !LockMove)
+        {
+            mover.state = StatePlayer.Movement;
+        }
+        else if (canClimb && !LockMove)
+        {
+            mover.state = StatePlayer.Climb;
+        }
 
     }
 
@@ -192,8 +190,7 @@ public class Player : MonoBehaviour
     {
         if (!LockJump)
         {
-
-                mover.state = StatePlayer.Jump;
+            mover.state = StatePlayer.Jump;
 
         }
 
@@ -203,7 +200,7 @@ public class Player : MonoBehaviour
     {
         if(enemies.Count > 0)
         {
-            Collider[] colliders = Physics.OverlapBox(_colliderJump.transform.position, _colliderJump.size, Quaternion.identity, unit);
+            Collider[] colliders = Physics.OverlapBox(_colliderJump.transform.position, _colliderJump.size, Quaternion.identity, layerUnit);
             if (colliders.Length > 0)
             {
 

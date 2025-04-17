@@ -1433,6 +1433,7 @@ MonoBehaviour:
   LockMove: 0
   speedDefault: 2
   speedInAir: 0.1
+  speedClimb: 0.1
   powerJump: 0.4
   turnMove: {x: 0, y: 0}
   turnToJumpAfterClimb: {x: 0, y: 0}
@@ -1440,7 +1441,7 @@ MonoBehaviour:
   layerGround:
     serializedVersion: 2
     m_Bits: 64
-  unit:
+  layerUnit:
     serializedVersion: 2
     m_Bits: 8
   collectUnits: {fileID: 1378110845}

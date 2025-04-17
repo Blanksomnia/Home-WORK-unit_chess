@@ -21,7 +21,6 @@ public class ClimbState : Movement
 
     public override void Enter()
     {
-        player.LockJump = true;
         player.animations.IsClimbing(1);
     }
     public override void Update()
@@ -54,24 +53,24 @@ public class ClimbState : Movement
             else if (LookAt(target) == LookAt(player.rb.transform.position + Vector3.right))
             {
                 player.LockJump = false;
-                turnToJumpAfterClimb = right * 0.2f;
+                turnToJumpAfterClimb = right * 0.15f;
                 if (CheckMoveRight())
-                    current = right * move.x * 1;
+                    current = right * player.speedClimb * Time.deltaTime;
 
 
             }
             else if (LookAt(target) == LookAt(player.rb.transform.position + Vector3.left))
             {
                 player.LockJump = false;
-                turnToJumpAfterClimb = left * 0.2f;
+                turnToJumpAfterClimb = left * 0.15f;
                 if (CheckMoveLeft())
-                    current = left * -move.x * 1f;
+                    current = left * player.speedClimb * Time.deltaTime;
 
             }
             else if (LookAt(player.rb.transform.position + Vector3.back) == LookAt(target))
             {
                 player.LockJump = false;
-                turnToJumpAfterClimb = -player.rb.transform.forward * 0.2f;
+                turnToJumpAfterClimb = -player.rb.transform.forward * player.speedClimb;
             }
 
             player.turnToJumpAfterClimb = new Vector2(turnToJumpAfterClimb.x, turnToJumpAfterClimb.z);

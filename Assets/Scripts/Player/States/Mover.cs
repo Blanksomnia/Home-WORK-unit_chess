@@ -3,7 +3,6 @@ using System;
 public abstract class Movement
 {
     public StatePlayer state;
-    private Player player; 
 
     public virtual void Enter()
     {
