@@ -47,6 +47,8 @@ public class ClimbState : Movement
             if (LookAt(Vector3.forward + player.rb.transform.position) == LookAt(target) && ClimbForward())
             {
                 Vector3 currentCenter = player.rb.transform.position + player.rb.transform.forward + new Vector3(0, 2f, 0);
+                player.LockJump = true;
+                player.LockMove = true;
                 player.animations.EndClimb(currentCenter);
             }
             else if (LookAt(target) == LookAt(player.rb.transform.position + Vector3.right))

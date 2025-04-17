@@ -54,7 +54,6 @@ public class AnimationPlayer
         player.LockJump = false;
         player.LockMove = false;
         player.rb.isKinematic = false;
-        player.turnToJumpAfterClimb = Vector2.zero;
     }
 
 
