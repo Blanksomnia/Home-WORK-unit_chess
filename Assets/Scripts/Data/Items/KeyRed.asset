@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a24fee5c92f6e468cc95b7ecedbe92, type: 3}
+  m_Name: KeyRed
+  m_EditorClassIdentifier: 
+  _name: Red key
+  material: {fileID: 2100000, guid: 0897acad11ce8c641b71cbec176a86ff, type: 2}
+  mesh: {fileID: -5051912661706895321, guid: ad10e4113786ee546b5e5563829d2b45, type: 3}
+  effects: []
+  duration: 0
+  audioActivate: {fileID: 8300000, guid: 978d8d3e6b0b64940ab0e01a09a98391, type: 3}
+  creatorEffects: {fileID: 11400000, guid: 8d9c49c8ce6651c4fba6ab54ecddae8b, type: 2}
+  scale: {x: 1, y: 1, z: 1}
+  canUse: 1

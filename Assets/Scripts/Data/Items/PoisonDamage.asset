@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a24fee5c92f6e468cc95b7ecedbe92, type: 3}
+  m_Name: PoisonDamage
+  m_EditorClassIdentifier: 
+  _name: 
+  material: {fileID: 2100000, guid: 5195427c0d27644ed90d87ebe86d468a, type: 2}
+  mesh: {fileID: 4300000, guid: 9ec750fc4cf747f4fbc15d8898b84ad7, type: 3}
+  effects:
+  - {fileID: 11400000, guid: ada75c15dd790634f89f75a8f9f53723, type: 2}
+  - {fileID: 11400000, guid: 59e61f7b615729f4c8ba0f8f010abccb, type: 2}
+  duration: 0
+  audioActivate: {fileID: 8300000, guid: 10dd6f1c375cc6c48a6173e4d47160d9, type: 3}
+  creatorEffects: {fileID: 11400000, guid: 8d9c49c8ce6651c4fba6ab54ecddae8b, type: 2}
+  scale: {x: 2, y: 2, z: 2}
+  canUse: 1

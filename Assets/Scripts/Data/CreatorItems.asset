@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970df92139104b448ab2918a62157a11, type: 3}
+  m_Name: CreatorItems
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 56a18d6804017f549bef5102de1bb379, type: 2}
+  - {fileID: 11400000, guid: 1b4c657b282dd164891b8364be6f5529, type: 2}
+  - {fileID: 11400000, guid: a4e0021846c5b334a958306c67d39cfa, type: 2}
+  - {fileID: 11400000, guid: 9c6a57e6c9dcf61418410461155d4bf6, type: 2}
+  - {fileID: 11400000, guid: b0469cf4f34518a45aa8d350495c79dc, type: 2}
+  - {fileID: 11400000, guid: aacda27bd992fad4bb8c8868edb7ffd4, type: 2}
+  - {fileID: 11400000, guid: db0c240dd2fd8134f97f7222a80e0247, type: 2}
+  - {fileID: 11400000, guid: 0650a3eb3e09fad4aaaf7de771ae0ea4, type: 2}
+  arms:
+  - {fileID: 11400000, guid: 9b5fc845ed690994bba1d9450309b76a, type: 2}
+  blasters:
+  - {fileID: 11400000, guid: 66f1a0da128255e4a81c074b15501d8f, type: 2}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34555ac56c28604e9dacf3a89d18f4c, type: 3}
+  m_Name: Blaster
+  m_EditorClassIdentifier: 
+  _name: Blaster
+  material: {fileID: 2100000, guid: 58d3215dbddde9b4ea1d242fbb11ce9c, type: 2}
+  mesh: {fileID: 4300000, guid: dbeb07ce6436fdc4988bcc03b8afc948, type: 3}
+  effects: []
+  duration: 1.5
+  audioActivate: {fileID: 8300000, guid: 454b976c8de4f054ea113a7f7703deeb, type: 3}
+  creatorEffects: {fileID: 11400000, guid: 8d9c49c8ce6651c4fba6ab54ecddae8b, type: 2}
+  scale: {x: 0.03, y: 0.03, z: 0.03}
+  canUse: 1
+  pool: {fileID: 11400000, guid: 8540dbe6338d2584a9c902b112a7e6f1, type: 2}

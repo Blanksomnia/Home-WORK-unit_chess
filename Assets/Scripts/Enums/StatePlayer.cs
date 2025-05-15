@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 
 public enum StatePlayer
 {
@@ -8,5 +6,6 @@ public enum StatePlayer
     Jump = 2,
     Climb = 3,
     AttackInAir = 4,
+    InteractiveItem = 5,
     Dead = 6
 }
