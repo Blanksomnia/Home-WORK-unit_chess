@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class Inventory
@@ -9,7 +8,7 @@ public class Inventory
     MeshFilter filter;
     MeshRenderer render;
     AudioSource source;
-    int _indexSelected = -1;
+    int _indexSelected = 0;
     public int indexSelected { get { return _indexSelected; } set { Select(value); } }
 
     public bool isBusy = false;
@@ -55,10 +54,7 @@ public class Inventory
 
     public ItemObject GetSelectedItem()
     {
-        if(_indexSelected != -1)
         return items[_indexSelected];
-        else
-            return null;
     }
 
 
@@ -118,8 +114,7 @@ public class Inventory
 
     public void ActivateItem(Character character)
     {
-        if(_indexSelected != -1)
-          if (items[_indexSelected] != null)
+        if (items[_indexSelected] != null)
             if (items[_indexSelected].canUseItem)
             {
                 if (activateSelectedAction != null)

@@ -20,6 +20,7 @@ public class InputPlayer : MonoBehaviour
 
     InputAction restart;
     InputAction timeScaleActivate;
+    InputAction mainMenu;
 
     private string dead = "Dead";
 
@@ -39,10 +40,11 @@ public class InputPlayer : MonoBehaviour
         map = control.FindActionMap("Debug");
         restart = map.FindAction("Restart");
         timeScaleActivate = map.FindAction("TimeScale");
+        mainMenu = map.FindAction("MainMenu");
 
         restart.Enable();
         timeScaleActivate.Enable();
-
+        mainMenu.Enable();
         InputSetActivity(true);
 
     }
@@ -50,7 +52,6 @@ public class InputPlayer : MonoBehaviour
 
     public void InputSetActivity(bool enable)
     {
-        player.enabled = enable;
         if (enable)
         {
             moveX.Enable();
@@ -71,7 +72,7 @@ public class InputPlayer : MonoBehaviour
             scrollItem.Disable();
             dropItem.Disable();
         }
-
+        player.enabled = enable;
     }
 
 
@@ -86,6 +87,8 @@ public class InputPlayer : MonoBehaviour
             else
                 Time.timeScale = 1;
         }
+        if(mainMenu.WasPressedThisFrame())
+            SceneManager.LoadScene(0);
 
 
 
